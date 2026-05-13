@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class AssignmentBackendOneApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(AssignmentBackendOneApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(AssignmentBackendOneApplication.class, args);
+    }
 
 }
