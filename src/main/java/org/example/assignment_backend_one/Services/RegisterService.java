@@ -3,7 +3,6 @@ package org.example.assignment_backend_one.Services;
 import org.example.assignment_backend_one.Models.AppUser;
 import org.example.assignment_backend_one.Repositories.AppUserRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Service
 public class RegisterService {
@@ -14,7 +13,7 @@ public class RegisterService {
        this.appUserRepository = appUserRepository;
 
    }
-   public boolean register( Long id, String firstName, String lastName, String email){
+   public boolean register( String firstName, String lastName, String email){
 
        if( firstName == null && lastName == null && email == null ){
            return false;
