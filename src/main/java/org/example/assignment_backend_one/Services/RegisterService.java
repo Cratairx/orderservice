@@ -1,16 +1,18 @@
 package org.example.assignment_backend_one.Services;
 
 import org.example.assignment_backend_one.Models.AppUser;
+import org.example.assignment_backend_one.Models.Customer;
 import org.example.assignment_backend_one.Repositories.AppUserRepository;
+import org.example.assignment_backend_one.Repositories.CustomerRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 public class RegisterService {
 
-   private final AppUserRepository appUserRepository;
+   private final CustomerRepository customerRepository;
 
-   public RegisterService(AppUserRepository appUserRepository){
-       this.appUserRepository = appUserRepository;
+   public RegisterService(CustomerRepository customerRepository){
+       this.customerRepository = customerRepository;
 
    }
    public boolean register( String firstName, String lastName, String email){
@@ -21,14 +23,16 @@ public class RegisterService {
        if(firstName.isEmpty() || lastName.isEmpty() || email.isEmpty()){
            return false;
        }
-       if (appUserRepository.findById(id).isPresent()){
+       // denna findByEmail kanske ska ändras til något vettigt. Jag fick inte ihop det med
+       // findById, men man kanske kan få ihop det eller med customerId eller liknande.
+       if (customerRepository.findByEmail(email).isPresent()){
            return false;
        }
-        AppUser appUser = new AppUser();
-        appUser.setFirstname(firstName);
-        appUser.setLastname(lastName);
-        appUser.setEmail(email);
-        appUserRepository.save(appUser);
+        Customer customer = new Customer();
+        customer.setFirstName(firstName);
+        customer.setLastName(lastName);
+        customer.setEmail(email);
+        customerRepository.save(customer);
 
         return true;
 
