@@ -8,7 +8,7 @@
     <title>Redigera kund</title>
 </head>
 <body>
-<form method="POST" th:action="@{/editcustomer}">
+<form method="POST" action="/editcustomer">
     <p>Redigera kundens uppgifter</p>
     <input type ="hidden" name ="id" th:value="${customer.id}">
     <div class = "form-group">
@@ -20,7 +20,7 @@
     <div class = form-group>
         <input type ="text" name = "email" th:value="${customer.email}">
     </div>
-    <button type = "submit" name = "submit" th:value="${customer.id}">Spara</button>
+    <button type = "submit">Spara</button>
 
 
 
