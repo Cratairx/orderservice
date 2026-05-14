@@ -10,7 +10,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Customer {
+public class
+Customer {
     @Id
     private Long id;
     private String firstName;
