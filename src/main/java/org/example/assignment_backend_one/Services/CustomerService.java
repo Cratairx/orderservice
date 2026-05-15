@@ -15,6 +15,16 @@ public class CustomerService {
 
   }
 
+  public void deleteCustomer(Long id) {
+      Customer customer = customerRepository.findById(id).orElse(null);
+
+      if (customer.getBooking() != null) {
+          throw new RuntimeException("Customer has a booking");
+      }
+
+      customerRepository.deleteById(id);
+  }
+
   public Customer getCustomerById(Long id) {
     return customerRepository.findById(id).orElse(null);
   }
@@ -27,6 +37,5 @@ public class CustomerService {
             customer.setEmail(email);
             customerRepository.save(customer);
         }
-
     }
 }

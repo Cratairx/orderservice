@@ -5,10 +5,8 @@ import org.example.assignment_backend_one.Repositories.CustomerRepository;
 import org.example.assignment_backend_one.Services.CustomerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class CustomerController {
@@ -40,4 +38,11 @@ public class CustomerController {
 
         return "redirect:/index";
     }
+
+    @RequestMapping("/deletecustomer/{id}")
+    public String deleteCustomer(@PathVariable Long id, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
+        customerService.deleteCustomer(id);
+        return "Index";
+    }
+
 }
