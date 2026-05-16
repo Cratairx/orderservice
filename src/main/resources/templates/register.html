@@ -11,9 +11,9 @@
 <body>
 <h1> Registrera kund</h1>
 <p th:if="${error}" th:text ="${error}" style ="color : red"></p>
-<form method="POST" action="/addBooking">
+<form method="POST" action="/register">
     <div class = "form-group">
-        <label for ="firstName">CustomerId</label>
+        <label for ="firstName">First name</label>
         <input type = "text" name = "firstName" id = "firstName" class = "form-control">
     </div>
     <div class = "form-group">

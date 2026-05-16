@@ -45,4 +45,9 @@ public class CustomerController {
         return "Index";
     }
 
+    @GetMapping("/customer")
+    public String customer() {
+        return "customer";
+    }
+
 }

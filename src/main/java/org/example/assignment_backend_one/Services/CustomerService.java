@@ -23,13 +23,14 @@ public class CustomerService {
       }
 
       customerRepository.deleteById(id);
+
   }
 
   public Customer getCustomerById(Long id) {
     return customerRepository.findById(id).orElse(null);
   }
 
-    public void updateCustomer(Long id, String firstname, String lastname, String email) {
+  public void updateCustomer(Long id, String firstname, String lastname, String email) {
         Customer customer = customerRepository.findById(id).orElse(null);
         if (customer != null) {
             customer.setFirstName(firstname);
@@ -38,4 +39,5 @@ public class CustomerService {
             customerRepository.save(customer);
         }
     }
+
 }
