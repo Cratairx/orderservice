@@ -51,7 +51,9 @@ public class CustomerController {
             model.addAttribute("customer", customerService.getCustomerById(id));
             return "redirect:/allcustomers";
         }
-        return "allcustomers";
+        model.addAttribute("error","Failed to delete customer");
+        model.addAttribute("customers", customerService.getAllCustomers());
+        return "/allcustomers";
     }
 
     @GetMapping("/customer")
