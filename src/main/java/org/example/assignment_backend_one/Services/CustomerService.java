@@ -19,14 +19,15 @@ public class CustomerService {
 
     }
 
-    public void deleteCustomer(Long id) {
+    public boolean deleteCustomer(Long id) {
         Customer customer = customerRepository.findById(id).orElse(null);
 
         if (customer.getBooking() != null) {
-            throw new RuntimeException("Customer has a booking");
+            return false;
         }
 
         customerRepository.deleteById(id);
+        return true;
 
     }
 

@@ -1,5 +1,6 @@
 package org.example.assignment_backend_one.Controllers;
 
+
 import jakarta.servlet.http.HttpSession;
 import org.example.assignment_backend_one.Models.Customer;
 import org.example.assignment_backend_one.Repositories.CustomerRepository;
@@ -32,6 +33,7 @@ public class CustomerController {
         model.addAttribute("email", email);
         return "editcustomer";
     }
+
     @PostMapping("/editcustomer")
     public String updateCustomer(@RequestParam Long id,
                                  @RequestParam String firstname,
@@ -44,8 +46,12 @@ public class CustomerController {
 
     @RequestMapping("/deletecustomer/{id}")
     public String deleteCustomer(@PathVariable Long id, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
-        customerService.deleteCustomer(id);
-        return "Index";
+        boolean result = customerService.deleteCustomer(id);
+        if (result) {
+            model.addAttribute("customer", customerService.getCustomerById(id));
+            return "redirect:/allcustomers";
+        }
+        return "allcustomers";
     }
 
     @GetMapping("/customer")

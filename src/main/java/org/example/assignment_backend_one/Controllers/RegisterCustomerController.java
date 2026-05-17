@@ -47,6 +47,6 @@ public class RegisterCustomerController {
         }
         model.addAttribute("error","Failed to register customer");
 
-        return "index";
+        return "register";
     }
 }

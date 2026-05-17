@@ -8,6 +8,7 @@
 <body>
 <div class="container mt-4">
     <h2>All Customers</h2>
+    <p th:if="${error}" th:text ="${error}" style ="color : red"></p>
     <table class="table">
         <thead>
         <tr>
