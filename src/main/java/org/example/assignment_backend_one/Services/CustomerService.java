@@ -20,7 +20,7 @@ public class CustomerService {
     }
 
     public boolean deleteCustomer(Long id) {
-        Customer customer = customerRepository.findById(id).orElse(null);
+        Customer customer = customerRepository.getCustomersById(id);
 
         if (customer.getBooking() != null) {
             return false;
