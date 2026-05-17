@@ -5,32 +5,36 @@ import org.example.assignment_backend_one.Repositories.CustomerRepository;
 import org.jspecify.annotations.Nullable;
 import org.springframework.stereotype.Service;
 
+
+import java.util.Arrays;
+import java.util.List;
+
 @Service
 public class CustomerService {
 
     CustomerRepository customerRepository;
 
-  public CustomerService(CustomerRepository customerRepository) {
-    this.customerRepository = customerRepository;
+    public CustomerService(CustomerRepository customerRepository) {
+        this.customerRepository = customerRepository;
 
-  }
+    }
 
-  public void deleteCustomer(Long id) {
-      Customer customer = customerRepository.findById(id).orElse(null);
+    public void deleteCustomer(Long id) {
+        Customer customer = customerRepository.findById(id).orElse(null);
 
-      if (customer.getBooking() != null) {
-          throw new RuntimeException("Customer has a booking");
-      }
+        if (customer.getBooking() != null) {
+            throw new RuntimeException("Customer has a booking");
+        }
 
-      customerRepository.deleteById(id);
+        customerRepository.deleteById(id);
 
-  }
+    }
 
-  public Customer getCustomerById(Long id) {
-    return customerRepository.findById(id).orElse(null);
-  }
+    public Customer getCustomerById(Long id) {
+        return customerRepository.findById(id).orElse(null);
+    }
 
-  public void updateCustomer(Long id, String firstname, String lastname, String email) {
+    public void updateCustomer(Long id, String firstname, String lastname, String email) {
         Customer customer = customerRepository.findById(id).orElse(null);
         if (customer != null) {
             customer.setFirstName(firstname);
@@ -40,4 +44,7 @@ public class CustomerService {
         }
     }
 
+    public List<Customer> getAllCustomers() {
+        return customerRepository.findAll();
+    }
 }
