@@ -1,10 +1,11 @@
 package org.example.assignment_backend_one.Models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
 
 @Entity
 @Data
@@ -12,5 +13,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Booking {
     @Id
+    @GeneratedValue(strategy =
+            GenerationType.IDENTITY)
     private Long id;
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
+    @ManyToOne
+    @JoinColumn(name = "room_id")
+    private Room room;
+    private LocalDate startDate;
+    private LocalDate endDate;
 }
