@@ -25,4 +25,11 @@ public class BookingController {
         bookingService.createBooking(customerId);
         return "Index";
     }
+
+    @GetMapping("/editBooking")
+        public String editBooking(){
+        // här ska edit koden in.
+            return "EditBooking";
+        }
+    }
 }

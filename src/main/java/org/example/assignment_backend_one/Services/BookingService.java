@@ -20,6 +20,7 @@ public class BookingService {
 
         Customer customer = customerRepository.findById(customerId).orElse(null);
 
+        assert customer != null;
         if (customer.getBooking() != null) {
             throw new RuntimeException("Customer already has a booking");
         }
