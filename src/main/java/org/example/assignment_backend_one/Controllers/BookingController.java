@@ -19,17 +19,12 @@ public class BookingController {
     public String booking() {
         return "Booking";
     }
-
+/*
     @PostMapping("/booking")
     public String booking(@RequestParam Long customerId) {
         bookingService.createBooking(customerId);
         return "Index";
     }
 
-    @GetMapping("/editBooking")
-        public String editBooking(){
-        // här ska edit koden in.
-            return "EditBooking";
-        }
-    }
+ */
 }
