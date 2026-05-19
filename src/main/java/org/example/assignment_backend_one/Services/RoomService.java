@@ -1,24 +1,14 @@
 package org.example.assignment_backend_one.Services;
 
 import org.example.assignment_backend_one.Models.Room;
-import org.example.assignment_backend_one.Repositories.RoomRepository;
-import org.springframework.stereotype.Service;
-import java.util.List;
 
-@Service
-public class RoomService {
 
-    private final RoomRepository roomRepository;
+public interface RoomService {
 
-    public RoomService(RoomRepository roomRepository) {
-        this.roomRepository = roomRepository;
-    }
 
-    public List<Room> getAllRooms() {
-        return roomRepository.findAll();
-    }
+    public void getAllRooms(Room  room);
 
-    public Room saveRoom(Room room) {
-        return roomRepository.save(room);
-    }
+
+
+
 }

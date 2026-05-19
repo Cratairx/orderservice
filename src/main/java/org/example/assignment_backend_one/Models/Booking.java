@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.example.assignment_backend_one.Controllers.CustomerController;
 
 import java.time.LocalDate;
 
