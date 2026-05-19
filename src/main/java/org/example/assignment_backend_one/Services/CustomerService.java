@@ -18,7 +18,7 @@ public class CustomerService {
         this.customerRepository = customerRepository;
 
     }
-
+/*
     public boolean deleteCustomer(Long id) {
         Customer customer = customerRepository.getCustomersById(id);
 
@@ -30,7 +30,7 @@ public class CustomerService {
         return true;
 
     }
-
+*/
     public Customer getCustomerById(Long id) {
         return customerRepository.findById(id).orElse(null);
     }
