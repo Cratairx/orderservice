@@ -21,6 +21,7 @@ Customer {
     private String firstName;
     private String lastName;
     private String email;
+    // sdawds
    /*
     private String phoneNumber;
     private String address;*/ // om vi vill senare
