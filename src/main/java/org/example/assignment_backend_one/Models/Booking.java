@@ -10,11 +10,14 @@ import org.example.assignment_backend_one.Controllers.CustomerController;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Booking {
+public class
+Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long BookingId;
 
+    // eventuellt ska denna ändras bara till @joincolum
+    
     @OneToOne(mappedBy = "booking")
     private Customer customer;
 }
