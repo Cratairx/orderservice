@@ -34,4 +34,8 @@ public class BookingService {
         bookingRepository.save(booking);
         return true;
     }
+
+    public List<Booking> getAllBookings() {
+        return bookingRepository.findAll();
+    }
 }

@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 public class CustomerService {
 
-    CustomerRepository customerRepository;
+    private final CustomerRepository customerRepository;
 
     public CustomerService(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
@@ -20,9 +20,12 @@ public class CustomerService {
     }
 
     public boolean deleteCustomer(Long id) {
-        Customer customer = customerRepository.getCustomersById(id);
+        Customer customer = customerRepository.findById(id).orElse(null);
 
-        if (customer.getBooking() != null) {
+        if (customer == null) {
+            return false;
+        }
+        if (customer.getBookings() != null && !customer.getBookings().isEmpty()) {
             return false;
         }
 
