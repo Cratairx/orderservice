@@ -12,17 +12,20 @@ import java.util.List;
 @Service
 public class CustomerService {
 
-    CustomerRepository customerRepository;
+    private final CustomerRepository customerRepository;
 
     public CustomerService(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
 
     }
-/*
-    public boolean deleteCustomer(Long id) {
-        Customer customer = customerRepository.getCustomersById(id);
 
-        if (customer.getBooking() != null) {
+    public boolean deleteCustomer(Long id) {
+        Customer customer = customerRepository.findById(id).orElse(null);
+
+        if (customer == null) {
+            return false;
+        }
+        if (customer.getBookings() != null && !customer.getBookings().isEmpty()) {
             return false;
         }
 
@@ -30,7 +33,7 @@ public class CustomerService {
         return true;
 
     }
-*/
+
     public Customer getCustomerById(Long id) {
         return customerRepository.findById(id).orElse(null);
     }
