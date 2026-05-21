@@ -22,4 +22,13 @@ public class RoomService {
     public Room saveRoom(Room room) {
         return roomRepository.save(room);
     }
+
+    // Tar bort ett rum via id – returnerar false om rummet inte finns
+    public boolean deleteRoom(Long id) {
+        if (roomRepository.existsById(id)) {
+            roomRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
 }

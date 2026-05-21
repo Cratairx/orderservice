@@ -37,7 +37,7 @@ public class BookingController {
     public String showBookingForm(Model model) {
         model.addAttribute("customers", customerRepository.findAll());
         model.addAttribute("rooms", roomRepository.findAll());
-        return "booking-form";
+        return "Booking";
     }
 
     // Tar emot formuläret och försöker skapa en bokning

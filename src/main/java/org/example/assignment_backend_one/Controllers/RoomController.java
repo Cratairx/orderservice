@@ -49,4 +49,16 @@ public class RoomController {
         model.addAttribute("rooms", roomService.getAllRooms());
         return "rooms";
     }
+
+    // Tar bort ett rum och redirectar tillbaka till rumlistan
+    @PostMapping("/delete/{id}")
+    public String deleteRoom(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        boolean success = roomService.deleteRoom(id);
+        if (success) {
+            redirectAttributes.addFlashAttribute("success", "Rummet togs bort.");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "Rummet hittades inte.");
+        }
+        return "redirect:/rooms";
+    }
 }
