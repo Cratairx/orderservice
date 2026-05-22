@@ -1,11 +1,13 @@
 package org.example.assignment_backend_one.Controllers;
 
 import jakarta.servlet.http.HttpSession;
+import org.example.assignment_backend_one.DTO.CustomerDTO;
 import org.example.assignment_backend_one.Services.RegisterService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -32,21 +34,30 @@ public class RegisterCustomerController {
 
         return "register";
     }
-    @PostMapping("/register")
-    public String register(@RequestParam String firstName,
+
+    /*
+    @RequestParam String firstName,
                            @RequestParam String lastName,
                            @RequestParam String email,
                            HttpSession session,
-                           Model model) {
-        boolean result = registerService.register(firstName,lastName,email);
+                           Model model)
+
+     */
+    @PostMapping("/register")
+    public String register(  @RequestBody CustomerDTO customer, HttpSession session, Model model) {
+        boolean result = registerService.register(customer.getFirstName(), customer.getLastName(), customer.getEmail());
         if (result) {
-            session.setAttribute("firstName", firstName);
-            session.setAttribute("lastName", lastName);
-            session.setAttribute("email", email);
+            session.setAttribute("firstName", customer.getFirstName());
+            session.setAttribute("lastName", customer.getLastName());
+            session.setAttribute("email", customer.getEmail());
             return "redirect:/index";
         }
         model.addAttribute("error","Failed to register customer");
 
         return "register";
+
     }
-}
+
+
+    }
+
