@@ -1,5 +1,6 @@
 package org.example.assignment_backend_one.Controllers;
 
+import jdk.dynalink.linker.ConversionComparator;
 import org.example.assignment_backend_one.Models.Booking;
 import org.example.assignment_backend_one.Models.Customer;
 import org.example.assignment_backend_one.Models.Room;
@@ -77,4 +78,25 @@ public class BookingController {
         model.addAttribute("bookings", bookingService.getAllBookings());
         return "bookings";
     }
+    @GetMapping("/editbooking")
+    public String editBookingForm(Model model, @RequestParam Long bookingId, RedirectAttributes redirectAttributes) {
+        Booking booking = bookingService.getBookingById(bookingId);
+        if (booking != null) {
+            redirectAttributes.addFlashAttribute("error", "bookningen hittades inte");
+            return "redirect:/bookings";
+        }
+        model.addAttribute("booking", booking);
+        model.addAttribute("customers", customerRepository.findAll());
+        model.addAttribute("rooms", roomRepository.findAll());
+
+        return  "redirect:/bookings/new";
+    }
+
+    @PostMapping("/editbooking")
+    public String updateBooking(  @RequestParam Long bookingId,
+                                  @RequestParam Long customerId,
+                                  @RequestParam Long roomId,
+                                  @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+                                  @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+                                  RedirectAttributes redirectAttributes) {
 }
