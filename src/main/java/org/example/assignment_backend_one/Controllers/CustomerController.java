@@ -2,6 +2,7 @@ package org.example.assignment_backend_one.Controllers;
 
 
 import jakarta.servlet.http.HttpSession;
+import org.example.assignment_backend_one.DTO.CustomerDTO;
 import org.example.assignment_backend_one.Models.Customer;
 import org.example.assignment_backend_one.Repositories.CustomerRepository;
 import org.example.assignment_backend_one.Services.CustomerService;
@@ -34,7 +35,7 @@ public class CustomerController {
         return "editcustomer";
     }
 
-    @PostMapping("/editcustomer")
+   /* @PostMapping("/editcustomer")
     public String updateCustomer(@RequestParam Long id,
                                  @RequestParam String firstname,
                                  @RequestParam String lastname,
@@ -42,8 +43,16 @@ public class CustomerController {
         customerService.updateCustomer(id, firstname, lastname, email);
 
         return "redirect:/index";
+    }*/
+    @PostMapping("/editcustomer")
+    public String updateCustomer(@ModelAttribute CustomerDTO customer) {
+
+       customerService.updateCustomer(customer.getId(), customer.getFirstName(), customer.getLastName(), customer.getEmail());
+        return "redirect:/index";
     }
 
+
+    ///deletecustomer/1
     @RequestMapping("/deletecustomer/{id}")
     public String deleteCustomer(@PathVariable Long id, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
         boolean result = customerService.deleteCustomer(id);

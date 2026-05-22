@@ -23,8 +23,7 @@ public class RegisterService {
        if(firstName.isEmpty() || lastName.isEmpty() || email.isEmpty()){
            return false;
        }
-       // denna findByEmail kanske ska ändras til något vettigt. Jag fick inte ihop det med
-       // findById, men man kanske kan få ihop det eller med customerId eller liknande.
+
        if (customerRepository.findByEmail(email).isPresent()){
            return false;
        }
