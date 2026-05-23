@@ -27,6 +27,9 @@
             <td th:text="${room.roomNumber}"></td>
             <td th:text="${room.roomType}"></td>
             <td>
+                <a th:href="@{/rooms/editroom/{id}(id=${room.id})}" class="btn btn-primary btn-sm">Edit</a>
+            </td>
+            <td>
                 <!-- Formulär används istället för länk eftersom delete kräver POST -->
                 <form th:action="@{/rooms/delete/{id}(id=${room.id})}" method="post">
                     <button type="submit" class="btn btn-danger btn-sm">Ta bort</button>

@@ -6,7 +6,7 @@ import org.example.assignment_backend_one.Repositories.AppUserRepository;
 import org.example.assignment_backend_one.Repositories.CustomerRepository;
 import org.springframework.stereotype.Service;
 
-@Service
+/*@Service
 public class RegisterService {
 
    private final CustomerRepository customerRepository;
@@ -34,7 +34,6 @@ public class RegisterService {
         customerRepository.save(customer);
 
         return true;
-
    }
 
-}
+}*/

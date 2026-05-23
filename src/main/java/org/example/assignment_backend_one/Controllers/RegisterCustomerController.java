@@ -1,20 +1,16 @@
 package org.example.assignment_backend_one.Controllers;
-
 import jakarta.servlet.http.HttpSession;
 import org.example.assignment_backend_one.DTO.CustomerDTO;
-import org.example.assignment_backend_one.Services.RegisterService;
+import org.example.assignment_backend_one.Services.LektionDTOer.CustomerImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class RegisterCustomerController {
-    private final RegisterService registerService;
+    private final CustomerImpl registerService;
 
-    public RegisterCustomerController(RegisterService registerService) {
+    public RegisterCustomerController(CustomerImpl registerService) {
         this.registerService = registerService;
     }
 
@@ -23,29 +19,14 @@ public class RegisterCustomerController {
         return "index";
     }
     @GetMapping("/register")
-    public String register(HttpSession session, Model model) {
- // osäkert på om vi måste hämta allt eller inte men tänker att det kan vara snyggt.
-        model.addAttribute("firstName");
-        model.addAttribute("lastName");
-        model.addAttribute("email");
-        session.getAttribute("firstName");
-        session.getAttribute("lastName");
-        session.getAttribute("email");
-
-        return "register";
+    public String register() {
+            return "register";
     }
 
-    /*
-    @RequestParam String firstName,
-                           @RequestParam String lastName,
-                           @RequestParam String email,
-                           HttpSession session,
-                           Model model)
-
-     */
     @PostMapping("/register")
-    public String register(  @RequestBody CustomerDTO customer, HttpSession session, Model model) {
+    public String register(@ModelAttribute CustomerDTO customer, HttpSession session, Model model) {
         boolean result = registerService.register(customer.getFirstName(), customer.getLastName(), customer.getEmail());
+        System.out.println("Customer:  " + customer);
         if (result) {
             session.setAttribute("firstName", customer.getFirstName());
             session.setAttribute("lastName", customer.getLastName());

@@ -3,9 +3,7 @@ package org.example.assignment_backend_one.Controllers;
 
 import jakarta.servlet.http.HttpSession;
 import org.example.assignment_backend_one.DTO.CustomerDTO;
-import org.example.assignment_backend_one.Models.Customer;
-import org.example.assignment_backend_one.Repositories.CustomerRepository;
-import org.example.assignment_backend_one.Services.CustomerService;
+import org.example.assignment_backend_one.Services.LektionDTOer.CustomerImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,9 +14,9 @@ import java.util.List;
 @Controller
 public class CustomerController {
 
-    private final CustomerService customerService;
+    private final CustomerImpl customerService;
 
-    public CustomerController( CustomerService customerService) {
+    public CustomerController( CustomerImpl customerService) {
                 this.customerService = customerService;
     }
 
@@ -52,7 +50,7 @@ public class CustomerController {
     }
 
 
-    ///deletecustomer/1
+
     @RequestMapping("/deletecustomer/{id}")
     public String deleteCustomer(@PathVariable Long id, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
         boolean result = customerService.deleteCustomer(id);

@@ -22,6 +22,9 @@ public class RoomService {
     public Room saveRoom(Room room) {
         return roomRepository.save(room);
     }
+    public Room editRoom(Room room) {
+        return roomRepository.save(room);
+    }
 
     // Tar bort ett rum via id – returnerar false om rummet inte finns
     public boolean deleteRoom(Long id) {
@@ -31,4 +34,9 @@ public class RoomService {
         }
         return false;
     }
+    public Room getRoomById(Long id) {
+        return roomRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Room not found with id: " + id));
+    }
+
 }

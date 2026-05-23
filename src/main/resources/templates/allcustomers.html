@@ -24,6 +24,7 @@
             <td th:text="${customer.id}"></td>
             <td th:text="${customer.firstName}"></td>
             <td th:text="${customer.lastName}"></td>
+            <td th:text="${customer.email}"></td>
             <td>
                 <a th:href="@{/editcustomer/{id}(id=${customer.id})}" class="btn btn-primary btn-sm">Edit</a>
             </td>

@@ -9,5 +9,7 @@ public interface ServiceCustomer {
     public void updateCustomer(Long id, String firstname, String lastname, String email);
     public boolean deleteCustomer(Long id);
     public List<Customer> getAllCustomers();
+    public boolean register( String firstName, String lastName, String email);
+
 
 }

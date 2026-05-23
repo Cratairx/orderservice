@@ -9,6 +9,10 @@ import java.util.List;
 @Service
 public class CustomerImpl implements ServiceCustomer {
     CustomerRepository customerRepository;
+    public CustomerImpl(CustomerRepository customerRepository) {
+        this.customerRepository = customerRepository;
+    }
+
     @Override
     public Customer getCustomerById(Long id) {
         return customerRepository.findById(id).orElse(null);
@@ -45,6 +49,30 @@ public class CustomerImpl implements ServiceCustomer {
     @Override
     public List<Customer> getAllCustomers() {
         return customerRepository.findAll();
+    }
+
+
+    @Override
+    public boolean register( String firstName, String lastName, String email){
+
+        if( firstName == null && lastName == null && email == null ){
+            return false;
+        }
+        if(firstName.isEmpty() || lastName.isEmpty() || email.isEmpty()){
+            return false;
+        }
+
+        if (customerRepository.findByEmail(email).isPresent()){
+            return false;
+        }
+        Customer customer = new Customer();
+        customer.setFirstName(firstName);
+        customer.setLastName(lastName);
+        customer.setEmail(email);
+        customerRepository.save(customer);
+
+        return true;
+
     }
 
 }

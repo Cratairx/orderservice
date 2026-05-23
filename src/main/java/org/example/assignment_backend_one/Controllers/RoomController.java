@@ -27,7 +27,7 @@ public class RoomController {
         return "room-form";
     }
 
-    // Tar emot formuläret och skapar rummet
+    // Tar emot formuläret och skapar rummet @ModelAttribute CustomerDTO customer
     @PostMapping("/new")
     public String createRoom(
             @RequestParam String roomNumber,
@@ -49,6 +49,30 @@ public class RoomController {
         model.addAttribute("rooms", roomService.getAllRooms());
         return "rooms";
     }
+    @GetMapping("/editroom/{id}")
+    public String showRoomForm(@PathVariable Long id, Model model) {
+        Room room = roomService.getRoomById(id);
+        model.addAttribute("room", room);
+        model.addAttribute("roomTypes", RoomType.values());
+        return "editroom";
+    }
+    @PostMapping("editroom/{id}")
+    public String editRoom(@PathVariable Long id,
+                           @RequestParam RoomType roomType,
+                           @RequestParam String roomNumber ) {
+
+        Room room = roomService.getRoomById(id);
+        room.setId(id);
+        room.setRoomNumber(roomNumber);
+        room.setRoomType(roomType);
+        roomService.saveRoom(room);
+        return "redirect:/rooms";
+    }
+
+
+
+
+
 
     // Tar bort ett rum och redirectar tillbaka till rumlistan
     @PostMapping("/delete/{id}")
