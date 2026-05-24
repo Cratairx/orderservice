@@ -1,5 +1,6 @@
 package org.example.assignment_backend_one.Services.LektionDTOer;
 
+import org.example.assignment_backend_one.DTO.CustomerDTO;
 import org.example.assignment_backend_one.Models.Customer;
 import org.example.assignment_backend_one.Repositories.CustomerRepository;
 import org.springframework.stereotype.Service;
@@ -49,6 +50,11 @@ public class CustomerImpl implements ServiceCustomer {
     @Override
     public List<Customer> getAllCustomers() {
         return customerRepository.findAll();
+    }
+    // emil fixar
+    @Override
+    public List<CustomerDTO> getAllCustomersDto() {
+        return null;
     }
 
 

@@ -38,4 +38,13 @@ public class BookingService {
     public List<Booking> getAllBookings() {
         return bookingRepository.findAll();
     }
+
+    public Booking getBookingById(Long id) {
+       return bookingRepository.findById(id)
+               .orElseThrow(()-> new RuntimeException("Booking not found!! with id " + id));
+    }
+
+    public void saveBooking(Booking booking) {
+        bookingRepository.save(booking);
+    }
 }

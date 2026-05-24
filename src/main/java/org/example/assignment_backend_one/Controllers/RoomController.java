@@ -1,8 +1,10 @@
 package org.example.assignment_backend_one.Controllers;
 
+import jakarta.servlet.http.HttpSession;
+import org.example.assignment_backend_one.DTO.RoomDTO;
 import org.example.assignment_backend_one.ENUMS.RoomType;
 import org.example.assignment_backend_one.Models.Room;
-import org.example.assignment_backend_one.Services.RoomService;
+import org.example.assignment_backend_one.Services.LektionDTOer.RoomServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,10 +14,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/rooms")
 public class RoomController {
 
-    private final RoomService roomService;
+    private final RoomServiceImpl roomService;
 
-    // Konstruktorinjektion
-    public RoomController(RoomService roomService) {
+    public RoomController( RoomServiceImpl roomService) {
         this.roomService = roomService;
     }
 
@@ -27,8 +28,26 @@ public class RoomController {
         return "room-form";
     }
 
-    // Tar emot formuläret och skapar rummet @ModelAttribute CustomerDTO customer
+    // Tar emot formuläret och skapar rummet
+    // @ModelAttribute CustomerDTO customer
+    // rummet skapas inte atm. FIXA!!!
     @PostMapping("/new")
+    public String createRoom(@ModelAttribute RoomDTO room, HttpSession session, RedirectAttributes redirectAttributes) {
+
+      Room newRoom = new Room();
+      newRoom.setRoomNumber(room.getRoomNumber());
+      newRoom.setRoomType(room.getRoomType());
+      Room savedRoom = roomService.saveRoom(newRoom);
+      if (savedRoom != null) {
+          redirectAttributes.addFlashAttribute("message", "Room has been saved successfully");
+      }else{
+          redirectAttributes.addFlashAttribute("error", "Room could not be saved");
+      }
+        return "redirect:/rooms/new";
+
+
+    }
+    /*@PostMapping("/new")
     public String createRoom(
             @RequestParam String roomNumber,
             @RequestParam RoomType roomType,
@@ -41,7 +60,7 @@ public class RoomController {
 
         redirectAttributes.addFlashAttribute("success", "Rum " + roomNumber + " skapades!");
         return "redirect:/rooms/new";
-    }
+    }*/
 
     // Visar alla rum
     @GetMapping
@@ -62,7 +81,6 @@ public class RoomController {
                            @RequestParam String roomNumber ) {
 
         Room room = roomService.getRoomById(id);
-        room.setId(id);
         room.setRoomNumber(roomNumber);
         room.setRoomType(roomType);
         roomService.saveRoom(room);

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Redigera bokning</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-4">
+    <h1>Redigera bokning</h1>
+
+    <p th:if="${error}" th:text="${error}" style="color: red;"></p>
+    <p th:if="${success}" th:text="${success}" style="color: green;"></p>
+
+    <form method="POST" th:action="@{/bookings/editbooking/{id}(id=${booking.id})}">
+
+        <div class="form-group">
+            <label>Kund</label>
+            <select name="customerId" class="form-control">
+                <option th:each="customer : ${customers}"
+                        th:value="${customer.id}"
+                        th:text="${customer.firstName + ' ' + customer.lastName}"
+                        th:selected="${customer.id == booking.customer.id}">
+                </option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Rum</label>
+            <select name="roomId" class="form-control">
+                <option th:each="room : ${rooms}"
+                        th:value="${room.id}"
+                        th:text="${room.roomNumber + ' (' + room.roomType + ')'}"
+                        th:selected="${room.id == booking.room.id}">
+                </option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Incheckning</label>
+            <input type="date" name="startDate" class="form-control"
+                   th:value="${booking.startDate}" required/>
+        </div>
+
+        <div class="form-group">
+            <label>Utcheckning</label>
+            <input type="date" name="endDate" class="form-control"
+                   th:value="${booking.endDate}" required/>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-2">Spara ändringar</button>
+    </form>
+
+    <a href="/bookings" class="btn btn-secondary mt-2">Visa alla bokningar</a>
+</div>
+</body>
+</html>

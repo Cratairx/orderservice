@@ -23,8 +23,9 @@ public class RegisterCustomerController {
             return "register";
     }
 
+    // @RequestBody CustomerDTO customer
     @PostMapping("/register")
-    public String register(@ModelAttribute CustomerDTO customer, HttpSession session, Model model) {
+    public String register(@RequestBody CustomerDTO customer, HttpSession session, Model model) {
         boolean result = registerService.register(customer.getFirstName(), customer.getLastName(), customer.getEmail());
         System.out.println("Customer:  " + customer);
         if (result) {

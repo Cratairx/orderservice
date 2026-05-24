@@ -23,6 +23,8 @@ public class BookingController {
     private final CustomerRepository customerRepository;
     private final RoomRepository roomRepository;
 
+    // detta får inte vara i Controller filen måste läggas till DTOer osv
+    // en Controller får endast prata med en Service, Service pratar sedan med Repos
     // Konstruktorinjektion – Spring sätter in rätt beroenden automatiskt
     public BookingController(BookingService bookingService,
                              CustomerRepository customerRepository,
@@ -70,6 +72,42 @@ public class BookingController {
 
         return "redirect:/bookings/new";
     }
+    @GetMapping("/editbooking/{id}")
+    public String showEditBookingForm(@PathVariable Long id, Model model) {
+        Booking booking = bookingService.getBookingById(id);
+        model.addAttribute("booking", booking);
+        model.addAttribute("customers", customerRepository.findAll());
+        model.addAttribute("rooms", roomRepository.findAll());
+        return "editBooking";
+    }
+    @PostMapping("/editbooking/{id}")
+    public String editBooking(
+            @PathVariable Long id,
+            @RequestParam Long customerId,
+            @RequestParam Long roomId,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+            RedirectAttributes redirectAttributes) {
+
+        Customer customer = customerRepository.findById(customerId).orElse(null);
+        Room room = roomRepository.findById(roomId).orElse(null);
+
+        if (customer == null || room == null) {
+            redirectAttributes.addFlashAttribute("error", "Kund eller rum hittades inte.");
+            return "redirect:/bookings/editbooking/" + id;
+        }
+
+        Booking booking = bookingService.getBookingById(id);
+        booking.setCustomer(customer);
+        booking.setRoom(room);
+        booking.setStartDate(startDate);
+        booking.setEndDate(endDate);
+        bookingService.saveBooking(booking);
+
+        redirectAttributes.addFlashAttribute("success", "Bokning ändrad!");
+        return "redirect:/bookings";
+    }
+
 
     // Visar en lista över alla bokningar
     @GetMapping

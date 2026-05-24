@@ -1,28 +1,28 @@
 package org.example.assignment_backend_one.Services.LektionDTOer;
 
 import org.example.assignment_backend_one.Models.Room;
-import org.example.assignment_backend_one.Repositories.CustomerRepository;
 import org.example.assignment_backend_one.Repositories.RoomRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
-public class RoomService implements ServiceRooms
+@Service
+public class RoomServiceImpl implements ServiceRooms
 {
     private final RoomRepository roomRepository;
 
 
-     public RoomService(RoomRepository roomRepository) {
+     public RoomServiceImpl(RoomRepository roomRepository) {
      this.roomRepository = roomRepository;
   }
 
     @Override
     public List<Room> getAllRooms() {
-        return List.of();
+        return roomRepository.findAll();
     }
 
     @Override
     public Room saveRoom(Room room) {
-        return null;
+       return roomRepository.save(room);
     }
 
     @Override
@@ -33,5 +33,17 @@ public class RoomService implements ServiceRooms
         }
         return false;
     }
+
+    @Override
+    public Room getRoomById(Long id) {
+        return roomRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Room not found with id: " + id));
+    }
+
+    @Override
+    public boolean saveRoom(Long id) {
+        return  roomRepository.existsById(id);
+    }
+
 
 }

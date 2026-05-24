@@ -1,5 +1,6 @@
 package org.example.assignment_backend_one.Services.LektionDTOer;
 
+import org.example.assignment_backend_one.ENUMS.RoomType;
 import org.example.assignment_backend_one.Models.Room;
 import org.example.assignment_backend_one.Repositories.RoomRepository;
 
@@ -10,6 +11,12 @@ public interface ServiceRooms {
 
     public List<Room> getAllRooms();
     public Room saveRoom(Room room);
-    public boolean deleteRoom(Long id);
 
+
+
+    public boolean deleteRoom(Long id);
+    public Room getRoomById(Long id);
+
+
+    boolean saveRoom(Long id);
 }

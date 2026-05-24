@@ -1,5 +1,6 @@
 package org.example.assignment_backend_one.Services.LektionDTOer;
 
+import org.example.assignment_backend_one.DTO.CustomerDTO;
 import org.example.assignment_backend_one.Models.Customer;
 
 import java.util.List;
@@ -10,6 +11,7 @@ public interface ServiceCustomer {
     public boolean deleteCustomer(Long id);
     public List<Customer> getAllCustomers();
     public boolean register( String firstName, String lastName, String email);
+    public List<CustomerDTO> getAllCustomersDto();
 
 
 }

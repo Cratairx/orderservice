@@ -6,7 +6,7 @@ import org.example.assignment_backend_one.Repositories.RoomRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
-@Service
+/*@Service
 public class RoomService {
 
     private final RoomRepository roomRepository;
@@ -39,4 +39,4 @@ public class RoomService {
                 .orElseThrow(() -> new RuntimeException("Room not found with id: " + id));
     }
 
-}
+}*/
