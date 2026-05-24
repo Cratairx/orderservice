@@ -1,19 +1,17 @@
-package org.example.assignment_backend_one.Services.LektionDTOer;
+package org.example.assignment_backend_one.Services.impl;
 
+import lombok.RequiredArgsConstructor;
 import org.example.assignment_backend_one.Models.Room;
 import org.example.assignment_backend_one.Repositories.RoomRepository;
+import org.example.assignment_backend_one.Services.RoomService;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
+
 @Service
-public class RoomServiceImpl implements ServiceRooms
-{
+@RequiredArgsConstructor
+public class RoomServiceImpl implements RoomService {
+
     private final RoomRepository roomRepository;
-
-
-     public RoomServiceImpl(RoomRepository roomRepository) {
-     this.roomRepository = roomRepository;
-  }
 
     @Override
     public List<Room> getAllRooms() {

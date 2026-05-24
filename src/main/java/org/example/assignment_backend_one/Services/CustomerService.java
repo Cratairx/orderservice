@@ -1,54 +1,24 @@
 package org.example.assignment_backend_one.Services;
 
+import org.example.assignment_backend_one.DTO.CustomerDTO;
+import org.example.assignment_backend_one.DTO.DetailedCustomerDTO;
 import org.example.assignment_backend_one.Models.Customer;
-import org.example.assignment_backend_one.Repositories.CustomerRepository;
-import org.jspecify.annotations.Nullable;
-import org.springframework.stereotype.Service;
-
-
-import java.util.Arrays;
 import java.util.List;
 
-/* @Service
-public class CustomerService {
+public interface CustomerService {
 
-    private final CustomerRepository customerRepository;
+    CustomerDTO customerToCustomerDTO(Customer c);
 
-    public CustomerService(CustomerRepository customerRepository) {
-        this.customerRepository = customerRepository;
+    DetailedCustomerDTO customerToDetailedCustomerDTO(Customer c);
 
-    }
+    List<DetailedCustomerDTO> getAllDetailedCustomersDto();
 
-    public boolean deleteCustomer(Long id) {
-        Customer customer = customerRepository.findById(id).orElse(null);
+    boolean register( String firstName, String lastName, String email);
 
-        if (customer == null) {
-            return false;
-        }
-        if (customer.getBookings() != null && !customer.getBookings().isEmpty()) {
-            return false;
-        }
+    boolean deleteCustomer(Long id);
 
-        customerRepository.deleteById(id);
-        return true;
+    Customer getCustomerById(Long id);
 
-    }
+    void updateCustomer(Long id, String firstname, String lastname, String email);
 
-    public Customer getCustomerById(Long id) {
-        return customerRepository.findById(id).orElse(null);
-    }
-
-    public void updateCustomer(Long id, String firstname, String lastname, String email) {
-        Customer customer = customerRepository.findById(id).orElse(null);
-        if (customer != null) {
-            customer.setFirstName(firstname);
-            customer.setLastName(lastname);
-            customer.setEmail(email);
-            customerRepository.save(customer);
-        }
-    }
-
-    public List<Customer> getAllCustomers() {
-        return customerRepository.findAll();
-    }
-}*/
+}

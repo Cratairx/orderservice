@@ -1,17 +1,16 @@
 package org.example.assignment_backend_one.Services;
 
+import org.example.assignment_backend_one.DTO.BookingDTO;
+import org.example.assignment_backend_one.DTO.DetailedBookingDTO;
 import org.example.assignment_backend_one.Models.*;
-import org.example.assignment_backend_one.Repositories.*;
-import org.springframework.stereotype.Service;
-import java.time.LocalDate;
-import java.util.List;
 
-@Service
-public class BookingService {
+public interface BookingService {
 
-    private final BookingRepository bookingRepository;
-    private final RoomRepository roomRepository;
+    BookingDTO bookingToBookingDTO(Booking booking);
 
+    DetailedBookingDTO bookingToDetailedDTO(Booking booking);
+
+/*
     public BookingService(BookingRepository bookingRepository, RoomRepository roomRepository) {
         this.bookingRepository = bookingRepository;
         this.roomRepository = roomRepository;
@@ -47,4 +46,6 @@ public class BookingService {
     public void saveBooking(Booking booking) {
         bookingRepository.save(booking);
     }
+
+ */
 }

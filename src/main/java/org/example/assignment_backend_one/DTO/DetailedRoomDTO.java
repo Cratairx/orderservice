@@ -1,6 +1,5 @@
 package org.example.assignment_backend_one.DTO;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,7 +10,7 @@ import org.example.assignment_backend_one.ENUMS.RoomType;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class RoomDTO {
+public class DetailedRoomDTO {
 
         private Long id;
         private String roomNumber;

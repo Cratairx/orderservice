@@ -1,10 +1,10 @@
 package org.example.assignment_backend_one.Controllers;
 
 import jakarta.servlet.http.HttpSession;
-import org.example.assignment_backend_one.DTO.RoomDTO;
+import org.example.assignment_backend_one.DTO.DetailedRoomDTO;
 import org.example.assignment_backend_one.ENUMS.RoomType;
 import org.example.assignment_backend_one.Models.Room;
-import org.example.assignment_backend_one.Services.LektionDTOer.RoomServiceImpl;
+import org.example.assignment_backend_one.Services.impl.RoomServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +32,7 @@ public class RoomController {
     // @ModelAttribute CustomerDTO customer
     // rummet skapas inte atm. FIXA!!!
     @PostMapping("/new")
-    public String createRoom(@ModelAttribute RoomDTO room, HttpSession session, RedirectAttributes redirectAttributes) {
+    public String createRoom(@ModelAttribute DetailedRoomDTO room, HttpSession session, RedirectAttributes redirectAttributes) {
 
       Room newRoom = new Room();
       newRoom.setRoomNumber(room.getRoomNumber());

@@ -1,42 +1,18 @@
 package org.example.assignment_backend_one.Services;
 
-
 import org.example.assignment_backend_one.Models.Room;
-import org.example.assignment_backend_one.Repositories.RoomRepository;
-import org.springframework.stereotype.Service;
 import java.util.List;
 
-/*@Service
-public class RoomService {
+public interface RoomService {
 
-    private final RoomRepository roomRepository;
+    List<Room> getAllRooms();
 
-    public RoomService(RoomRepository roomRepository) {
-        this.roomRepository = roomRepository;
-    }
+    Room saveRoom(Room room);
 
-    public List<Room> getAllRooms() {
-        return roomRepository.findAll();
-    }
+    boolean deleteRoom(Long id);
 
-    public Room saveRoom(Room room) {
-        return roomRepository.save(room);
-    }
-    public Room editRoom(Room room) {
-        return roomRepository.save(room);
-    }
+    Room getRoomById(Long id);
 
-    // Tar bort ett rum via id – returnerar false om rummet inte finns
-    public boolean deleteRoom(Long id) {
-        if (roomRepository.existsById(id)) {
-            roomRepository.deleteById(id);
-            return true;
-        }
-        return false;
-    }
-    public Room getRoomById(Long id) {
-        return roomRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Room not found with id: " + id));
-    }
+    boolean saveRoom(Long id);
 
-}*/
+}

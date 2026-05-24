@@ -1,24 +1,12 @@
 package org.example.assignment_backend_one.Controllers;
 
-import org.example.assignment_backend_one.Models.Booking;
-import org.example.assignment_backend_one.Models.Customer;
-import org.example.assignment_backend_one.Models.Room;
-import org.example.assignment_backend_one.Repositories.CustomerRepository;
-import org.example.assignment_backend_one.Repositories.RoomRepository;
-import org.example.assignment_backend_one.Services.BookingService;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.time.LocalDate;
-import java.util.List;
 
 @Controller
 @RequestMapping("/bookings")
 public class BookingController {
-
+/*
     private final BookingService bookingService;
     private final CustomerRepository customerRepository;
     private final RoomRepository roomRepository;
@@ -115,4 +103,6 @@ public class BookingController {
         model.addAttribute("bookings", bookingService.getAllBookings());
         return "bookings";
     }
+
+ */
 }

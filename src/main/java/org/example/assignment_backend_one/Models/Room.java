@@ -8,6 +8,8 @@ import org.example.assignment_backend_one.ENUMS.RoomType;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
+
 public class Room {
 
     @Id

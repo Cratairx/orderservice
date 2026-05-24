@@ -17,8 +17,10 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
             AND b.endDate > :startDate
         )
     """)
+
     List<Room> findAvailableRooms(
             @Param("startDate") LocalDate startDate,
             @Param("endDate") LocalDate endDate
     );
+
 }
