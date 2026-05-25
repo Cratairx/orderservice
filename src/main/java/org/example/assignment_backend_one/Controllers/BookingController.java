@@ -67,7 +67,7 @@ public class BookingController {
             }
         }
 
-        return "available-rooms";
+        return "availableRooms";
     }
 
 /*
