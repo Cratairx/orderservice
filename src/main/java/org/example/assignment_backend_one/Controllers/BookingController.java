@@ -51,6 +51,25 @@ public class BookingController {
         return "Booking";
     }
 
+    @GetMapping("/available")
+    public String showAvailableRooms(
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+            Model model) {
+
+        if (startDate != null && endDate != null) {
+            if (endDate.isBefore(startDate)) {
+                model.addAttribute("error", "End date cannot be before start date.");
+            } else {
+                model.addAttribute("rooms", bookingService.getAvailableRooms(startDate, endDate));
+                model.addAttribute("startDate", startDate);
+                model.addAttribute("endDate", endDate);
+            }
+        }
+
+        return "available-rooms";
+    }
+
 /*
 
     @GetMapping("/editbooking/{id}")
