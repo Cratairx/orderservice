@@ -7,7 +7,7 @@
 </head>
 <body>
 <div class="container mt-4">
-    <h1>Alla rum</h1>
+    <h1 class="text-center">Alla rum</h1>
 
     <p th:if="${error}" th:text="${error}" style="color: red;"></p>
     <p th:if="${success}" th:text="${success}" style="color: green;"></p>
@@ -30,7 +30,6 @@
                 <a th:href="@{/rooms/editroom/{id}(id=${room.id})}" class="btn btn-primary btn-sm">Edit</a>
             </td>
             <td>
-                <!-- Formulär används istället för länk eftersom delete kräver POST -->
                 <form th:action="@{/rooms/delete/{id}(id=${room.id})}" method="post">
                     <button type="submit" class="btn btn-danger btn-sm">Ta bort</button>
                 </form>
@@ -39,7 +38,10 @@
         </tbody>
     </table>
 
-    <a href="/rooms/new" class="btn btn-primary">Skapa nytt rum</a>
+    <div class="text-center mt-2">
+        <a href="/rooms/new" class="btn btn-primary">Skapa nytt rum</a>
+        <a href="/index" class="btn btn-secondary">Home</a>
+    </div>
 </div>
 </body>
 </html>

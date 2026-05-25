@@ -2,7 +2,11 @@ package org.example.assignment_backend_one.Services;
 
 import org.example.assignment_backend_one.DTO.BookingDTO;
 import org.example.assignment_backend_one.DTO.DetailedBookingDTO;
+import org.example.assignment_backend_one.DTO.RoomDTO;
 import org.example.assignment_backend_one.Models.*;
+
+import java.time.LocalDate;
+import java.util.List;
 
 public interface BookingService {
 
@@ -10,42 +14,14 @@ public interface BookingService {
 
     DetailedBookingDTO bookingToDetailedDTO(Booking booking);
 
-/*
-    public BookingService(BookingRepository bookingRepository, RoomRepository roomRepository) {
-        this.bookingRepository = bookingRepository;
-        this.roomRepository = roomRepository;
-    }
+    boolean createBooking(Long customerId, Long roomId, LocalDate startDate, LocalDate endDate);
 
-    public List<Room> getAvailableRooms(LocalDate startDate, LocalDate endDate) {
-        return roomRepository.findAvailableRooms(startDate, endDate);
-    }
+    List<DetailedBookingDTO> getAllBookings();
 
-    public boolean createBooking(Customer customer, Room room, LocalDate startDate, LocalDate endDate) {
-        List<Room> available = roomRepository.findAvailableRooms(startDate, endDate);
-        if (!available.contains(room)) {
-            return false; // rummet är redan bokat
-        }
-        Booking booking = new Booking();
-        booking.setCustomer(customer);
-        booking.setRoom(room);
-        booking.setStartDate(startDate);
-        booking.setEndDate(endDate);
-        bookingRepository.save(booking);
-        return true;
-    }
+    DetailedBookingDTO getBookingById(Long id);
 
-    public List<Booking> getAllBookings() {
-        return bookingRepository.findAll();
-    }
+    List<RoomDTO> getAvailableRooms(LocalDate startDate, LocalDate endDate);
 
-    public Booking getBookingById(Long id) {
-       return bookingRepository.findById(id)
-               .orElseThrow(()-> new RuntimeException("Booking not found!! with id " + id));
-    }
+    boolean updateBooking(Long id, Long customerId, Long roomId, LocalDate startDate, LocalDate endDate);
 
-    public void saveBooking(Booking booking) {
-        bookingRepository.save(booking);
-    }
-
- */
 }

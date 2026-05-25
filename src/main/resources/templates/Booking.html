@@ -7,18 +7,14 @@
 </head>
 <body>
 <div class="container mt-4">
-  <h1>Registrera en bokning</h1>
+  <h1 class="text-center">Registrera en bokning</h1>
 
-  <!-- Felmeddelande om rummet är upptaget -->
   <p th:if="${error}" th:text="${error}" style="color: red;"></p>
-  <!-- Bekräftelse om bokningen lyckades -->
   <p th:if="${success}" th:text="${success}" style="color: green;"></p>
 
-  <!-- Action pekar på /bookings/new istället för /booking -->
   <form method="POST" action="/bookings/new">
 
-    <!-- Dropdown med kunder istället för fritext-id -->
-    <div class="form-group">
+    <div class="form-group mb-2">
       <label>Kund</label>
       <select name="customerId" class="form-control">
         <option th:each="customer : ${customers}"
@@ -28,8 +24,7 @@
       </select>
     </div>
 
-    <!-- Dropdown med rum -->
-    <div class="form-group">
+    <div class="form-group mb-2">
       <label>Rum</label>
       <select name="roomId" class="form-control">
         <option th:each="room : ${rooms}"
@@ -39,18 +34,21 @@
       </select>
     </div>
 
-    <!-- Datumfält -->
-    <div class="form-group">
+    <div class="form-group mb-2">
       <label>Incheckning</label>
       <input type="date" name="startDate" class="form-control" required/>
     </div>
 
-    <div class="form-group">
+    <div class="form-group mb-2">
       <label>Utcheckning</label>
       <input type="date" name="endDate" class="form-control" required/>
     </div>
 
-    <button type="submit" class="btn btn-primary mt-2">Registrera bokning</button>
+    <div class="text-center mt-3">
+      <button type="submit" class="btn btn-primary">Registrera bokning</button>
+      <a href="/bookings" class="btn btn-secondary">Back</a>
+      <a href="/index" class="btn btn-secondary">Home</a>
+    </div>
   </form>
 </div>
 </body>

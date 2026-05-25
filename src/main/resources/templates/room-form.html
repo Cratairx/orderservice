@@ -7,7 +7,7 @@
 </head>
 <body>
 <div class="container mt-4">
-    <h1>Skapa rum</h1>
+    <h1 class="text-center">Skapa rum</h1>
 
     <p th:if="${error}" th:text="${error}" style="color: red;"></p>
     <p th:if="${success}" th:text="${success}" style="color: green;"></p>
@@ -29,10 +29,12 @@
             </select>
         </div>
 
-        <button type="submit" class="btn btn-primary mt-2">Skapa rum</button>
+        <div class="text-center mt-3">
+            <button type="submit" class="btn btn-primary">Skapa rum</button>
+            <a href="/rooms" class="btn btn-secondary">Back</a>
+            <a href="/index" class="btn btn-secondary">Home</a>
+        </div>
     </form>
-
-    <a href="/rooms" class="btn btn-secondary mt-2">Visa alla rum</a>
 </div>
 </body>
 </html>

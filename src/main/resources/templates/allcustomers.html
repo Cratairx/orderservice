@@ -7,8 +7,8 @@
 </head>
 <body>
 <div class="container mt-4">
-    <h2>All Customers</h2>
-    <p th:if="${error}" th:text ="${error}" style ="color : red"></p>
+    <h2 class="text-center">All Customers</h2>
+    <p th:if="${error}" th:text="${error}" style="color: red;"></p>
     <table class="table">
         <thead>
         <tr>
@@ -35,6 +35,10 @@
         </tr>
         </tbody>
     </table>
+    <div class="text-center mt-2">
+        <a href="/customer" class="btn btn-secondary btn-sm">Back</a>
+        <a href="/index" class="btn btn-secondary btn-sm">Home</a>
+    </div>
 </div>
 </body>
 </html>

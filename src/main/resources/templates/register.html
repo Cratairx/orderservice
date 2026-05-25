@@ -11,24 +11,28 @@
 <body>
 <h1> Registrera kund</h1>
 <p th:if="${error}" th:text ="${error}" style ="color : red"></p>
-<form method="POST" action="/register">
-    <div class = "form-group">
-        <label for ="firstName">First name</label>
-        <input type = "text" name = "firstName" id = "firstName" class = "form-control">
-    </div>
-    <div class = "form-group">
-        <label for ="lastName"> Last name</label>
-        <input type = "text" name = "lastName" id = "lastName" class = "form-control">
-    </div>
-
-    <div class = "form-group">
-        <label for ="email"> Email</label>
-        <input type = "email" name = "email" id = "email" class = "form-control">
-    </div>
-    <button  type = "Submit" class = "btn btn-primary">Registrera kund</button>
-    <button > Hem <a href="/index"></a></button> <!-- kanske så här?!-->
-
-</form>
-
+<div class="container mt-4">
+    <h1 class="text-center">Registrera kund</h1>
+    <p th:if="${error}" th:text="${error}" style="color: red;"></p>
+    <form method="POST" action="/register">
+        <div class="form-group mb-2">
+            <label for="firstName">First name</label>
+            <input type="text" name="firstName" id="firstName" class="form-control">
+        </div>
+        <div class="form-group mb-2">
+            <label for="lastName">Last name</label>
+            <input type="text" name="lastName" id="lastName" class="form-control">
+        </div>
+        <div class="form-group mb-2">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" class="form-control">
+        </div>
+        <div class="text-center mt-3">
+            <button type="submit" class="btn btn-primary">Registrera kund</button>
+            <a href="/customer" class="btn btn-secondary">Back</a>
+            <a href="/index" class="btn btn-secondary">Home</a>
+        </div>
+    </form>
+</div>
 </body>
 </html>

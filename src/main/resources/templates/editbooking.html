@@ -7,14 +7,14 @@
 </head>
 <body>
 <div class="container mt-4">
-    <h1>Redigera bokning</h1>
+    <h1 class="text-center">Redigera bokning</h1>
 
     <p th:if="${error}" th:text="${error}" style="color: red;"></p>
     <p th:if="${success}" th:text="${success}" style="color: green;"></p>
 
     <form method="POST" th:action="@{/bookings/editbooking/{id}(id=${booking.id})}">
 
-        <div class="form-group">
+        <div class="form-group mb-2">
             <label>Kund</label>
             <select name="customerId" class="form-control">
                 <option th:each="customer : ${customers}"
@@ -25,7 +25,7 @@
             </select>
         </div>
 
-        <div class="form-group">
+        <div class="form-group mb-2">
             <label>Rum</label>
             <select name="roomId" class="form-control">
                 <option th:each="room : ${rooms}"
@@ -36,22 +36,24 @@
             </select>
         </div>
 
-        <div class="form-group">
+        <div class="form-group mb-2">
             <label>Incheckning</label>
             <input type="date" name="startDate" class="form-control"
                    th:value="${booking.startDate}" required/>
         </div>
 
-        <div class="form-group">
+        <div class="form-group mb-2">
             <label>Utcheckning</label>
             <input type="date" name="endDate" class="form-control"
                    th:value="${booking.endDate}" required/>
         </div>
 
-        <button type="submit" class="btn btn-primary mt-2">Spara ändringar</button>
+        <div class="text-center mt-3">
+            <button type="submit" class="btn btn-primary">Spara ändringar</button>
+            <a href="/bookings" class="btn btn-secondary">Back</a>
+            <a href="/index" class="btn btn-secondary">Home</a>
+        </div>
     </form>
-
-    <a href="/bookings" class="btn btn-secondary mt-2">Visa alla bokningar</a>
 </div>
 </body>
 </html>

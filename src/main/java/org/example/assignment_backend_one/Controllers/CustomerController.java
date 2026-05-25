@@ -13,6 +13,16 @@ public class CustomerController {
 
     private final CustomerService customerService;
 
+    @GetMapping("/index")
+    public String index() {
+        return "Index";
+    }
+
+    @GetMapping("/")
+    public String home() {
+        return "Index";
+    }
+
     @GetMapping("/customer")
     public String customer() {
         return "customer";
@@ -73,5 +83,6 @@ public class CustomerController {
         customerService.updateCustomer(id, firstName, lastName, email);
         return "redirect:/allcustomers";
     }
+
 
 }
