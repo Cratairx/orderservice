@@ -20,7 +20,7 @@ public interface BookingService {
 
     DetailedBookingDTO getBookingById(Long id);
 
-    List<RoomDTO> getAvailableRooms(LocalDate startDate, LocalDate endDate);
+    List<RoomDTO> getAvailableRooms(LocalDate startDate, LocalDate endDate, int guests);
 
     boolean updateBooking(Long id, Long customerId, Long roomId, LocalDate startDate, LocalDate endDate);
 

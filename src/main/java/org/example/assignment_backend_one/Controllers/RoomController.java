@@ -25,7 +25,7 @@ public class RoomController {
     public String showRoomForm(Model model) {
         // Skickar med rumtyper så Thymeleaf kan bygga en dropdown
         model.addAttribute("roomTypes", RoomType.values());
-        return "room-form";
+        return "roomForm";
     }
 
     // Tar emot formuläret och skapar rummet
@@ -73,7 +73,7 @@ public class RoomController {
         Room room = roomService.getRoomById(id);
         model.addAttribute("room", room);
         model.addAttribute("roomTypes", RoomType.values());
-        return "editroom";
+        return "editRoom";
     }
     @PostMapping("editroom/{id}")
     public String editRoom(@PathVariable Long id,
