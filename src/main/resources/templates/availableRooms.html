@@ -7,9 +7,9 @@
 </head>
 <body>
 <div class="container mt-4">
-    <h2>Search Available Rooms</h2>
+    <h2>Sök tillgängliga rum</h2>
 
-    <form method="get" action="bookings/available" class="row g-3 mb-4">
+    <form method="get" action="/bookings/available" class="row g-3 mb-4">
         <div class="col-auto">
             <label for="startDate">From</label>
             <input type="date" id="startDate" name="startDate" class="form-control"
@@ -20,22 +20,32 @@
             <input type="date" id="endDate" name="endDate" class="form-control"
                    th:value="${endDate}" required/>
         </div>
+        <div class="col-auto">
+            <label>Antal gäster</label>
+            <div>
+                <input type="radio" name="guests" value="1"
+                       th:checked="${guests == 1 or guests == null}"/> 1 gäst
+                &nbsp;
+                <input type="radio" name="guests" value="2"
+                       th:checked="${guests == 2}"/> 2 gäster
+            </div>
+        </div>
         <div class="col-auto align-self-end">
-            <button type="submit" class="btn btn-primary">Search</button>
+            <button type="submit" class="btn btn-primary">Sök</button>
         </div>
     </form>
 
     <p th:if="${error}" th:text="${error}" style="color: red"></p>
 
     <div th:if="${rooms}">
-        <h4>Available Rooms</h4>
-        <p th:if="${#lists.isEmpty(rooms)}">No rooms available for this period.</p>
+        <h4>Tillgängliga rum</h4>
+        <p th:if="${#lists.isEmpty(rooms)}">Inga lediga rum finns</p>
         <table class="table" th:unless="${#lists.isEmpty(rooms)}">
             <thead>
             <tr>
-                <th>Room Number</th>
-                <th>Type</th>
-                <th>Book</th>
+                <th>Rum</th>
+                <th>Typ</th>
+                <th>Boka</th>
             </tr>
             </thead>
             <tbody>
@@ -44,11 +54,14 @@
                 <td th:text="${room.roomType}"></td>
                 <td>
                     <a th:href="@{/bookings/new(roomId=${room.id},startDate=${startDate},endDate=${endDate})}"
-                       class="btn btn-success btn-sm">Book</a>
+                       class="btn btn-success btn-sm">Boka</a>
                 </td>
             </tr>
             </tbody>
         </table>
+    </div>
+    <div class="text-center mt-2">
+        <a href="/index" class="btn btn-secondary btn-sm">Hem</a>
     </div>
 </div>
 </body>

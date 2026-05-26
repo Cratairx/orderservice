@@ -22,10 +22,18 @@ public class BookingController {
     private final RoomService roomService;
 
     @GetMapping("/new")
-    public String showBookingForm(Model model) {
+    public String showBookingForm(
+            Model model,
+            @RequestParam(required = false) Long roomId,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+
         model.addAttribute("customers", customerService.getAllDetailedCustomersDto());
         model.addAttribute("rooms", roomService.getAllRooms());
-        return "Booking";
+        model.addAttribute("selectedRoomId", roomId);
+        model.addAttribute("startDate", startDate);
+        model.addAttribute("endDate", endDate);
+        return "createBooking";
     }
 
     @PostMapping("/new")
@@ -38,7 +46,7 @@ public class BookingController {
 
         boolean success = bookingService.createBooking(customerId, roomId, startDate, endDate);
         if (success) {
-            redirectAttributes.addFlashAttribute("success", "Booking created!");
+            redirectAttributes.addFlashAttribute("success", "Bokning skapad!");
         } else {
             redirectAttributes.addFlashAttribute("error", "Room is already booked for those dates.");
         }
@@ -48,22 +56,24 @@ public class BookingController {
     @GetMapping
     public String listBookings(Model model) {
         model.addAttribute("bookings", bookingService.getAllBookings());
-        return "Booking";
+        return "bookings";
     }
 
     @GetMapping("/available")
     public String showAvailableRooms(
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+            @RequestParam(required = false, defaultValue = "1") int guests,
             Model model) {
 
         if (startDate != null && endDate != null) {
             if (endDate.isBefore(startDate)) {
                 model.addAttribute("error", "End date cannot be before start date.");
             } else {
-                model.addAttribute("rooms", bookingService.getAvailableRooms(startDate, endDate));
+                model.addAttribute("rooms", bookingService.getAvailableRooms(startDate, endDate, guests));
                 model.addAttribute("startDate", startDate);
                 model.addAttribute("endDate", endDate);
+                model.addAttribute("guests", guests);
             }
         }
 

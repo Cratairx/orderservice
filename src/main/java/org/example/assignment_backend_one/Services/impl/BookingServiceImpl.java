@@ -5,6 +5,7 @@ import org.example.assignment_backend_one.DTO.BookingDTO;
 import org.example.assignment_backend_one.DTO.CustomerDTO;
 import org.example.assignment_backend_one.DTO.DetailedBookingDTO;
 import org.example.assignment_backend_one.DTO.RoomDTO;
+import org.example.assignment_backend_one.ENUMS.RoomType;
 import org.example.assignment_backend_one.Models.Booking;
 import org.example.assignment_backend_one.Models.Customer;
 import org.example.assignment_backend_one.Models.Room;
@@ -86,8 +87,9 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public List<RoomDTO> getAvailableRooms(LocalDate startDate, LocalDate endDate) {
+    public List<RoomDTO> getAvailableRooms(LocalDate startDate, LocalDate endDate, int guests) {
         return roomRepository.findAvailableRooms(startDate, endDate).stream()
+                .filter(room -> guests < 2 || room.getRoomType() == RoomType.DOUBLE)
                 .map(this::toRoomDTO)
                 .toList();
     }

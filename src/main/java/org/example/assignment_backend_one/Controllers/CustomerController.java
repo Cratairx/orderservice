@@ -46,7 +46,7 @@ public class CustomerController {
     public String allcustomers(Model model) {
         model.addAttribute("customers", customerService.getAllDetailedCustomersDto());
 
-        return "allcustomers";
+        return "allCustomers";
     }
 
     @GetMapping("/register")
@@ -70,7 +70,7 @@ public class CustomerController {
     @GetMapping("/editcustomer/{id}")
     public String editCustomer(@PathVariable Long id, Model model) {
         model.addAttribute("customer", customerService.getCustomerById(id));
-        return "editcustomer";
+        return "editCustomer";
     }
 
     @PostMapping("/editcustomer")

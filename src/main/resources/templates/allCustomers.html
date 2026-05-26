@@ -7,19 +7,23 @@
 </head>
 <body>
 <div class="container mt-4">
-    <h2 class="text-center">All Customers</h2>
+    <h2 class="text-center">Alla kunder</h2>
 
     <p th:if="${error}" th:text="${error}" style="color: red"></p>
+
+    <div class="text-center mt-2">
+        <a href="/register" class="btn btn-primary btn-sm">Registrera kund</a>
+    </div>
 
     <table class="table">
         <thead>
         <tr>
             <th>ID</th>
-            <th>First Name</th>
-            <th>Last Name</th>
+            <th>Förnamn</th>
+            <th>Efternamn</th>
             <th>Email</th>
-            <th>Edit</th>
-            <th>Delete</th>
+            <th>Ändra</th>
+            <th>Ta bort</th>
         </tr>
         </thead>
         <tbody>
@@ -29,17 +33,16 @@
             <td th:text="${customer.lastName}"></td>
             <td th:text="${customer.email}"></td>
             <td>
-                <a th:href="@{/editcustomer/{id}(id=${customer.id})}" class="btn btn-primary btn-sm">Edit</a>
+                <a th:href="@{/editcustomer/{id}(id=${customer.id})}" class="btn btn-primary btn-sm">Ändra</a>
             </td>
             <td>
-                <a th:href="@{/deletecustomer/{id}(id=${customer.id})}" class="btn btn-danger btn-sm">Delete</a>
+                <a th:href="@{/deletecustomer/{id}(id=${customer.id})}" class="btn btn-danger btn-sm">Ta bort</a>
             </td>
         </tr>
         </tbody>
     </table>
     <div class="text-center mt-2">
-        <a href="/customer" class="btn btn-secondary btn-sm">Back</a>
-        <a href="/index" class="btn btn-secondary btn-sm">Home</a>
+        <a href="/index" class="btn btn-secondary btn-sm">Hem</a>
     </div>
 </div>
 </body>

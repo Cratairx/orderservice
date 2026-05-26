@@ -18,7 +18,8 @@
             <th>ID</th>
             <th>Rumsnummer</th>
             <th>Typ</th>
-            <th>Actions</th>
+            <th>Ändra</th>
+            <th>Ta bort</th>
         </tr>
         </thead>
         <tbody>
@@ -27,7 +28,7 @@
             <td th:text="${room.roomNumber}"></td>
             <td th:text="${room.roomType}"></td>
             <td>
-                <a th:href="@{/rooms/editroom/{id}(id=${room.id})}" class="btn btn-primary btn-sm">Edit</a>
+                <a th:href="@{/rooms/editroom/{id}(id=${room.id})}" class="btn btn-primary btn-sm">Ändra</a>
             </td>
             <td>
                 <form th:action="@{/rooms/delete/{id}(id=${room.id})}" method="post">
@@ -40,7 +41,7 @@
 
     <div class="text-center mt-2">
         <a href="/rooms/new" class="btn btn-primary">Skapa nytt rum</a>
-        <a href="/index" class="btn btn-secondary">Home</a>
+        <a href="/index" class="btn btn-secondary">Hem</a>
     </div>
 </div>
 </body>
