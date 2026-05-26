@@ -24,4 +24,5 @@ public interface BookingService {
 
     boolean updateBooking(Long id, Long customerId, Long roomId, LocalDate startDate, LocalDate endDate);
 
+    boolean deleteBooking(Long id);
 }

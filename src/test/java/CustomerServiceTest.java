@@ -35,7 +35,7 @@ public class CustomerServiceTest {
         when(customerRepository.findByEmail("john@example.com"))
                 .thenReturn(Optional.of(new Customer()));
 
-        boolean result = customerServiceImpl.register("John", "Doe", "john@example.com");
+        boolean result = customerServiceImpl.register(1L,"John", "Doe", "john@example.com");
 
         assertFalse(result);
         verify(customerRepository, never()).save(any());
@@ -45,7 +45,7 @@ public class CustomerServiceTest {
     void registerShouldReturnTrueWhenEmailNotInUse() {
         when(customerRepository.findByEmail("john@example.com")).thenReturn(Optional.empty());
 
-        boolean result = customerServiceImpl.register("John", "Doe", "john@example.com");
+        boolean result = customerServiceImpl.register(1L,"John", "Doe", "john@example.com");
 
         assertTrue(result);
         verify(customerRepository, times(1)).save(any(Customer.class));

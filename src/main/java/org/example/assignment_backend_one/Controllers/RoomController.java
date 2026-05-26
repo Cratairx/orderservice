@@ -47,20 +47,7 @@ public class RoomController {
 
 
     }
-    /*@PostMapping("/new")
-    public String createRoom(
-            @RequestParam String roomNumber,
-            @RequestParam RoomType roomType,
-            RedirectAttributes redirectAttributes) {
 
-        Room room = new Room();
-        room.setRoomNumber(roomNumber);
-        room.setRoomType(roomType);
-        roomService.saveRoom(room);
-
-        redirectAttributes.addFlashAttribute("success", "Rum " + roomNumber + " skapades!");
-        return "redirect:/rooms/new";
-    }*/
 
     // Visar alla rum
     @GetMapping

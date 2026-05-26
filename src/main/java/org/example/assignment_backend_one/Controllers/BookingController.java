@@ -1,12 +1,7 @@
 package org.example.assignment_backend_one.Controllers;
-
-
 import lombok.RequiredArgsConstructor;
 import org.example.assignment_backend_one.DTO.DetailedBookingDTO;
 import org.example.assignment_backend_one.DTO.SmallBookingDTO;
-import org.example.assignment_backend_one.Models.Booking;
-import org.example.assignment_backend_one.Models.Customer;
-import org.example.assignment_backend_one.Models.Room;
 import org.example.assignment_backend_one.Services.BookingService;
 import org.example.assignment_backend_one.Services.CustomerService;
 import org.example.assignment_backend_one.Services.RoomService;
@@ -122,6 +117,19 @@ public class BookingController {
             redirectAttributes.addFlashAttribute("error", "Could not update booking.");
         }
         return "redirect:/bookings";
+    }
+    // delete booking funktion ska finnas. @{/bookings/deleteBooking/{id}(id=${booking.id})}
+    @PostMapping("/deletebooking/{id}")
+    public String deleteBooking(@PathVariable Long id, RedirectAttributes redirectAttributes, Model model) {
+        boolean success = bookingService.deleteBooking(id);
+        if (success) {
+            redirectAttributes.addFlashAttribute("success", "Rummet togs bort.");
+
+        } else {
+            redirectAttributes.addFlashAttribute("error", "Rummet hittades inte.");
+        }
+        model.addAttribute("bookings", bookingService.getAllBookings());
+        return "/bookings";
     }
 
 

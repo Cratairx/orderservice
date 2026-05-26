@@ -114,6 +114,15 @@ public class BookingServiceImpl implements BookingService {
         return true;
     }
 
+    @Override
+    public boolean deleteBooking(Long id) {
+        if (bookingRepository.existsById(id)) {
+            bookingRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
+
     private RoomDTO toRoomDTO(Room room) {
         return RoomDTO.builder()
                 .id(room.getId())
