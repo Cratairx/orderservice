@@ -38,7 +38,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public boolean register(String firstName, String lastName, String email) {
+    public boolean register(Long id, String firstName, String lastName, String email) {
         if( firstName == null || lastName == null || email == null ){
             return false;
         }

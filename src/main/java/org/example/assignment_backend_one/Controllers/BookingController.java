@@ -2,6 +2,11 @@ package org.example.assignment_backend_one.Controllers;
 
 
 import lombok.RequiredArgsConstructor;
+import org.example.assignment_backend_one.DTO.DetailedBookingDTO;
+import org.example.assignment_backend_one.DTO.SmallBookingDTO;
+import org.example.assignment_backend_one.Models.Booking;
+import org.example.assignment_backend_one.Models.Customer;
+import org.example.assignment_backend_one.Models.Room;
 import org.example.assignment_backend_one.Services.BookingService;
 import org.example.assignment_backend_one.Services.CustomerService;
 import org.example.assignment_backend_one.Services.RoomService;
@@ -51,44 +56,44 @@ public class BookingController {
         return "Booking";
     }
 
-/*
+
 
     @GetMapping("/editbooking/{id}")
     public String showEditBookingForm(@PathVariable Long id, Model model) {
-        Booking booking = bookingService.getBookingById(id);
-        model.addAttribute("booking", booking);
-        model.addAttribute("customers", customerRepository.findAll());
-        model.addAttribute("rooms", roomRepository.findAll());
+        DetailedBookingDTO booking = bookingService.getBookingById(id);
+
+       SmallBookingDTO form = SmallBookingDTO.builder()
+                .id(booking.getId())
+                .customerId(booking.getCustomer().getId())
+                .roomId(booking.getRoom().getId())
+                .startDate(booking.getStartDate())
+                .endDate(booking.getEndDate())
+                .build();
+
+        model.addAttribute("bookingForm", form);
+        model.addAttribute("customers", customerService.getAllDetailedCustomersDto());
+        model.addAttribute("rooms", roomService.getAllRooms());
         return "editBooking";
     }
 
-    @PostMapping("/editbooking/{id}")
-    public String editBooking(
-            @PathVariable Long id,
-            @RequestParam Long customerId,
-            @RequestParam Long roomId,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
-            RedirectAttributes redirectAttributes) {
+    @PostMapping("/editbooking")
+    public String editBooking(@ModelAttribute SmallBookingDTO bookingForm,
+                              RedirectAttributes redirectAttributes) {
 
-        Customer customer = customerRepository.findById(customerId).orElse(null);
-        Room room = roomRepository.findById(roomId).orElse(null);
+        boolean success = bookingService.updateBooking(
+                bookingForm.getId(),
+                bookingForm.getCustomerId(),
+                bookingForm.getRoomId(),
+                bookingForm.getStartDate(),
+                bookingForm.getEndDate());
 
-        if (customer == null || room == null) {
-            redirectAttributes.addFlashAttribute("error", "Kund eller rum hittades inte.");
-            return "redirect:/bookings/editbooking/" + id;
+        if (success) {
+            redirectAttributes.addFlashAttribute("success", "Booking updated!");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "Could not update booking.");
         }
-
-        Booking booking = bookingService.getBookingById(id);
-        booking.setCustomer(customer);
-        booking.setRoom(room);
-        booking.setStartDate(startDate);
-        booking.setEndDate(endDate);
-        bookingService.saveBooking(booking);
-
-        redirectAttributes.addFlashAttribute("success", "Bokning ändrad!");
         return "redirect:/bookings";
     }
 
- */
+
 }

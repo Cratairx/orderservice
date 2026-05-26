@@ -94,7 +94,22 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public boolean updateBooking(Long id, Long customerId, Long roomId, LocalDate startDate, LocalDate endDate) {
-        return false;
+        Booking booking = bookingRepository.findById(id).orElse(null);
+        Customer customer = customerRepository.findById(customerId).orElse(null);
+        Room room = roomRepository.findById(roomId).orElse(null);
+
+        if (booking == null || customer == null || room == null) return false;
+
+        List<Room> availableRooms = roomRepository.findAvailableRooms(startDate, endDate);
+        boolean isSameRoom = booking.getRoom().getId().equals(roomId);
+        if (!availableRooms.contains(room) && !isSameRoom) return false;
+
+        booking.setCustomer(customer);
+        booking.setRoom(room);
+        booking.setStartDate(startDate);
+        booking.setEndDate(endDate);
+        bookingRepository.save(booking);
+        return true;
     }
 
     private RoomDTO toRoomDTO(Room room) {

@@ -1,6 +1,7 @@
 package org.example.assignment_backend_one.Controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.example.assignment_backend_one.DTO.CustomerDTO;
 import org.example.assignment_backend_one.Services.CustomerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -57,13 +58,10 @@ public class CustomerController {
     }
 
     @PostMapping("/register")
-    public String register(@RequestParam String firstName,
-                           @RequestParam String lastName,
-                           @RequestParam String email,
-                           Model model) {
-        boolean success = customerService.register(firstName, lastName, email);
-        if (!success) {
-            model.addAttribute("error", "Registration failed. Email may already be in use.");
+    public String register(@ModelAttribute CustomerDTO customer, Model model) {
+        boolean sucess = customerService.register(customer.getId(),customer.getFirstName(), customer.getLastName(), customer.getEmail());
+        if (!sucess) {
+            model.addAttribute("error","Failed to register customer");
             return "register";
         }
         return "redirect:/allcustomers";
@@ -76,11 +74,8 @@ public class CustomerController {
     }
 
     @PostMapping("/editcustomer")
-    public String updateCustomer(@RequestParam Long id,
-                                 @RequestParam String firstName,
-                                 @RequestParam String lastName,
-                                 @RequestParam String email) {
-        customerService.updateCustomer(id, firstName, lastName, email);
+    public String updateCustomer(@ModelAttribute CustomerDTO customer, Model model) {
+        customerService.updateCustomer(customer.getId(), customer.getFirstName(), customer.getLastName(), customer.getEmail());
         return "redirect:/allcustomers";
     }
 
