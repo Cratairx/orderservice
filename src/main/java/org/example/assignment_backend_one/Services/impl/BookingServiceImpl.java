@@ -57,16 +57,17 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public boolean createBooking(Long customerId, Long roomId, LocalDate startDate, LocalDate endDate) {
+    public boolean updateBooking(Long id, Long customerId, Long roomId, LocalDate startDate, LocalDate endDate) {
+        Booking booking = bookingRepository.findById(id).orElse(null);
         Customer customer = customerRepository.findById(customerId).orElse(null);
         Room room = roomRepository.findById(roomId).orElse(null);
 
-        if (customer == null || room == null) return false;
+        if (booking == null || customer == null || room == null) return false;
 
-        List<Room> availableRooms = roomRepository.findAvailableRooms(startDate, endDate);
-        if (!availableRooms.contains(room)) return false;
+        // Check for overlapping bookings on this room, excluding the current booking
+        boolean hasConflict = bookingRepository.existsOverlappingBooking(roomId, startDate, endDate, id);
+        if (hasConflict) return false;
 
-        Booking booking = new Booking();
         booking.setCustomer(customer);
         booking.setRoom(room);
         booking.setStartDate(startDate);
