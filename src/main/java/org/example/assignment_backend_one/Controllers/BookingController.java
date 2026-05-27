@@ -112,9 +112,9 @@ public class BookingController {
                 bookingForm.getEndDate());
 
         if (success) {
-            redirectAttributes.addFlashAttribute("success", "Booking updated!");
+            redirectAttributes.addFlashAttribute("success", "Bokning updaterad!");
         } else {
-            redirectAttributes.addFlashAttribute("error", "Could not update booking.");
+            redirectAttributes.addFlashAttribute("error", "kan inte updatera bookning.");
         }
         return "redirect:/bookings";
     }
