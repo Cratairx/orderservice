@@ -57,17 +57,16 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public boolean updateBooking(Long id, Long customerId, Long roomId, LocalDate startDate, LocalDate endDate) {
-        Booking booking = bookingRepository.findById(id).orElse(null);
+    public boolean createBooking(Long customerId, Long roomId, LocalDate startDate, LocalDate endDate) {
         Customer customer = customerRepository.findById(customerId).orElse(null);
         Room room = roomRepository.findById(roomId).orElse(null);
 
-        if (booking == null || customer == null || room == null) return false;
+        if (customer == null || room == null) return false;
 
-        // Check for overlapping bookings on this room, excluding the current booking
-        boolean hasConflict = bookingRepository.existsOverlappingBooking(roomId, startDate, endDate, id);
-        if (hasConflict) return false;
+        List<Room> availableRooms = roomRepository.findAvailableRooms(startDate, endDate);
+        if (!availableRooms.contains(room)) return false;
 
+        Booking booking = new Booking();
         booking.setCustomer(customer);
         booking.setRoom(room);
         booking.setStartDate(startDate);
@@ -103,9 +102,8 @@ public class BookingServiceImpl implements BookingService {
 
         if (booking == null || customer == null || room == null) return false;
 
-        List<Room> availableRooms = roomRepository.findAvailableRooms(startDate, endDate);
-        boolean isSameRoom = booking.getRoom().getId().equals(roomId);
-        if (!availableRooms.contains(room) && !isSameRoom) return false;
+        boolean hasConflict = bookingRepository.existsOverlappingBooking(roomId, startDate, endDate, id);
+        if (hasConflict) return false;
 
         booking.setCustomer(customer);
         booking.setRoom(room);
