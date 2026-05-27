@@ -80,7 +80,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void updateCustomer(Long id, String firstname, String lastname, String email) {
+    public boolean updateCustomer(Long id, String firstname, String lastname, String email) {
         Customer customer = customerRepository.findById(id).orElse(null);
         if (customer != null) {
             customer.setFirstName(firstname);
@@ -88,6 +88,7 @@ public class CustomerServiceImpl implements CustomerService {
             customer.setEmail(email);
             customerRepository.save(customer);
         }
+        return false;
     }
 
 }

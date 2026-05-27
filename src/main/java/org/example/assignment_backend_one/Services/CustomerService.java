@@ -19,6 +19,6 @@ public interface CustomerService {
 
     Customer getCustomerById(Long id);
 
-    void updateCustomer(Long id, String firstname, String lastname, String email);
+    boolean updateCustomer(Long id, String firstname, String lastname, String email);
 
 }

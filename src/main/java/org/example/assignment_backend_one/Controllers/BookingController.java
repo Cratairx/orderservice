@@ -118,18 +118,17 @@ public class BookingController {
         }
         return "redirect:/bookings";
     }
-    // delete booking funktion ska finnas. @{/bookings/deleteBooking/{id}(id=${booking.id})}
+
     @PostMapping("/deletebooking/{id}")
     public String deleteBooking(@PathVariable Long id, RedirectAttributes redirectAttributes, Model model) {
         boolean success = bookingService.deleteBooking(id);
         if (success) {
-            redirectAttributes.addFlashAttribute("success", "Rummet togs bort.");
-
+            redirectAttributes.addFlashAttribute("success", "Bokning borttagen!");
         } else {
-            redirectAttributes.addFlashAttribute("error", "Rummet hittades inte.");
+            redirectAttributes.addFlashAttribute("error", "Bookning finns inte.");
         }
         model.addAttribute("bookings", bookingService.getAllBookings());
-        return "/bookings";
+        return "redirect:/bookings";
     }
 
 

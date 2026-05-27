@@ -73,7 +73,12 @@ public class CustomerController {
 
     @PostMapping("/editcustomer")
     public String updateCustomer(@ModelAttribute CustomerDTO customer, Model model) {
-        customerService.updateCustomer(customer.getId(), customer.getFirstName(), customer.getLastName(), customer.getEmail());
+      boolean sucess=customerService.updateCustomer(customer.getId(), customer.getFirstName(), customer.getLastName(), customer.getEmail());
+      if (!sucess) {
+          model.addAttribute("error","Failed to update customer");
+          return "redirect:/allcustomers";
+      }
+      model.addAttribute("sucess", "Successfully updated customer details");
         return "redirect:/allcustomers";
     }
 

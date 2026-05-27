@@ -9,6 +9,7 @@
 <div class="container mt-4">
     <h2 class="text-center">Alla bokningar</h2>
 
+    <p th:if="${success}" th:text="${error}" style="color: green;"></p>
     <p th:if="${error}" th:text="${error}" style="color: red"></p>
 
     <div class="text-center mt-2 mb-3">
@@ -37,6 +38,7 @@
             <td>
                 <a th:href="@{/bookings/editbooking/{id}(id=${booking.id})}"
                    class="btn btn-primary btn-sm">Ändra</a>
+
             </td>
             <td>
                 <form method="post" th:action="@{/bookings/deletebooking/{id}(id=${booking.id})}">
