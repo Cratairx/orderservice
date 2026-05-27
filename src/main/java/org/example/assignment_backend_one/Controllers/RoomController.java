@@ -20,17 +20,14 @@ public class RoomController {
         this.roomService = roomService;
     }
 
-    // Visar formulär för att skapa ett nytt rum
     @GetMapping("/new")
     public String showRoomForm(Model model) {
-        // Skickar med rumtyper så Thymeleaf kan bygga en dropdown
+
         model.addAttribute("roomTypes", RoomType.values());
         return "roomForm";
     }
 
-    // Tar emot formuläret och skapar rummet
-    // @ModelAttribute CustomerDTO customer
-    // rummet skapas inte atm. FIXA!!!
+
     @PostMapping("/new")
     public String createRoom(@ModelAttribute DetailedRoomDTO room, HttpSession session, RedirectAttributes redirectAttributes) {
 
