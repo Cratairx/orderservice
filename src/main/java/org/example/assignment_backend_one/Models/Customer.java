@@ -4,11 +4,6 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-/*@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder*/
-
 public class Customer {
     @Id
     @GeneratedValue(strategy =GenerationType.IDENTITY)

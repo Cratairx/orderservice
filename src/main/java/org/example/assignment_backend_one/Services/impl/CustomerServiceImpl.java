@@ -22,10 +22,7 @@ public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository customerRepository;
     private final BookingService bookingService;
 
-   /* @Override
-    public CustomerDTO customerToCustomerDTO(Customer c) {
-        return CustomerDTO.builder().id(c.getId()).firstName(c.getFirstName()).lastName(c.getLastName()).build();
-    }*/
+
     @Override
     public CustomerDTO customerToCustomerDTO(Customer c){
         return new  CustomerDTO(c.getId(),c.getFirstName(),c.getLastName());
