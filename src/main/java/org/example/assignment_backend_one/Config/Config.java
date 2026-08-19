@@ -1,6 +1,6 @@
 package org.example.assignment_backend_one.Config;
 
-import lombok.RequiredArgsConstructor;
+
 import org.example.assignment_backend_one.ENUMS.RoomType;
 import org.example.assignment_backend_one.Models.Customer;
 import org.example.assignment_backend_one.Models.Room;
@@ -12,11 +12,16 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-@RequiredArgsConstructor
+
 public class Config implements CommandLineRunner {
 
     private final CustomerRepository customerRepository;
     private final RoomRepository roomRepository;
+
+    public Config(CustomerRepository customerRepository, RoomRepository roomRepository) {
+        this.customerRepository = customerRepository;
+        this.roomRepository = roomRepository;
+    }
 
     @Override
     public void run(String... args) {

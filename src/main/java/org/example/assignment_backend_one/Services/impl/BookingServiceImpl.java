@@ -1,6 +1,4 @@
 package org.example.assignment_backend_one.Services.impl;
-
-import lombok.RequiredArgsConstructor;
 import org.example.assignment_backend_one.DTO.BookingDTO;
 import org.example.assignment_backend_one.DTO.CustomerDTO;
 import org.example.assignment_backend_one.DTO.DetailedBookingDTO;
@@ -20,40 +18,45 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
+
 public class BookingServiceImpl implements BookingService {
+    public BookingServiceImpl(BookingRepository bookingRepository, CustomerRepository customerRepository, RoomRepository roomRepository) {
+        this.bookingRepository = bookingRepository;
+        this.customerRepository = customerRepository;
+        this.roomRepository = roomRepository;
+    }
 
     private final BookingRepository bookingRepository;
     private final CustomerRepository customerRepository;
     private final RoomRepository roomRepository;
 
-    @Override
-    public BookingDTO bookingToBookingDTO(Booking booking) {
-        return BookingDTO.builder()
-                .id(booking.getId())
-                .customer(CustomerDTO.builder()
-                        .id(booking.getCustomer().getId())
-                        .firstName(booking.getCustomer().getFirstName())
-                        .lastName(booking.getCustomer().getLastName())
-                        .build())
-                .room(booking.getRoom())
-                .startDate(booking.getStartDate())
-                .endDate(booking.getEndDate())
-                .build();
-    }
 
     @Override
-    public DetailedBookingDTO bookingToDetailedDTO(Booking booking) {
-        return DetailedBookingDTO.builder().id(booking.getId())
-                .customer(CustomerDTO.builder()
-                        .id(booking.getCustomer().getId())
-                        .firstName(booking.getCustomer().getFirstName())
-                        .lastName(booking.getCustomer().getLastName())
-                        .build())
-                .room(booking.getRoom())
-                .startDate(booking.getStartDate())
-                .endDate(booking.getEndDate())
-                .build();
+    public BookingDTO bookingToBookingDTO(Booking booking) {
+        return new BookingDTO(
+                booking.getId(),
+                new CustomerDTO(
+                        booking.getCustomer().getId(),
+                        booking.getCustomer().getFirstName(),
+                        booking.getCustomer().getLastName()),
+                booking.getRoom(),
+                booking.getStartDate(),
+                booking.getEndDate());
+    }
+
+
+    @Override
+    public DetailedBookingDTO bookingToDetailedDTO(Booking booking){
+        return new DetailedBookingDTO(
+                booking.getId(),
+                new CustomerDTO(
+                booking.getCustomer().getId(),
+                booking.getCustomer().getFirstName(),
+                booking.getCustomer().getLastName(),
+                booking.getCustomer().getEmail()),
+                booking.getRoom(),
+                booking.getStartDate(),
+                booking.getEndDate());
     }
 
     @Override
@@ -121,13 +124,12 @@ public class BookingServiceImpl implements BookingService {
         }
         return false;
     }
-
     private RoomDTO toRoomDTO(Room room) {
-        return RoomDTO.builder()
-                .id(room.getId())
-                .roomNumber(room.getRoomNumber())
-                .roomType(room.getRoomType())
-                .build();
+    return new RoomDTO( room.getId(),room.getRoomNumber(),room.getRoomType());
+
     }
+
+
+
 
 }

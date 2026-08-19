@@ -1,6 +1,6 @@
 package org.example.assignment_backend_one.Services.impl;
 
-import lombok.RequiredArgsConstructor;
+
 import org.example.assignment_backend_one.DTO.CustomerDTO;
 import org.example.assignment_backend_one.DTO.DetailedCustomerDTO;
 import org.example.assignment_backend_one.Models.Customer;
@@ -11,23 +11,28 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
+
 public class CustomerServiceImpl implements CustomerService {
+
+    public CustomerServiceImpl(CustomerRepository customerRepository, BookingService bookingService) {
+        this.customerRepository = customerRepository;
+        this.bookingService = bookingService;
+    }
 
     private final CustomerRepository customerRepository;
     private final BookingService bookingService;
 
-    @Override
+   /* @Override
     public CustomerDTO customerToCustomerDTO(Customer c) {
         return CustomerDTO.builder().id(c.getId()).firstName(c.getFirstName()).lastName(c.getLastName()).build();
-    }
-
+    }*/
     @Override
-    public DetailedCustomerDTO customerToDetailedCustomerDTO(Customer c) {
-        return DetailedCustomerDTO.builder().id(c.getId())
-                .firstName(c.getFirstName()).lastName(c.getLastName())
-                .email(c.getEmail()).bookings(c.getBookings().stream()
-                        .map(bookingService::bookingToBookingDTO).toList()).build();
+    public CustomerDTO customerToCustomerDTO(Customer c){
+        return new  CustomerDTO(c.getId(),c.getFirstName(),c.getLastName());
+    }
+    @Override
+    public DetailedCustomerDTO customerToDetailedCustomerDTO(Customer c){
+        return new DetailedCustomerDTO(c.getId(),c.getFirstName(),c.getLastName(),c.getEmail());
     }
 
     @Override

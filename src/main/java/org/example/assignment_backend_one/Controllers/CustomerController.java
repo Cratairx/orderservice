@@ -1,6 +1,6 @@
 package org.example.assignment_backend_one.Controllers;
 
-import lombok.RequiredArgsConstructor;
+
 import org.example.assignment_backend_one.DTO.CustomerDTO;
 import org.example.assignment_backend_one.Services.CustomerService;
 import org.springframework.stereotype.Controller;
@@ -9,11 +9,15 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequiredArgsConstructor
+
 
 public class CustomerController {
 
     private final CustomerService customerService;
+
+    public CustomerController(CustomerService customerService) {
+        this.customerService = customerService;
+    }
 
     @GetMapping("/index")
     public String index() {

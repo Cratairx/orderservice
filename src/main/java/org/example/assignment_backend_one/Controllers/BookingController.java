@@ -1,5 +1,5 @@
 package org.example.assignment_backend_one.Controllers;
-import lombok.RequiredArgsConstructor;
+
 import org.example.assignment_backend_one.DTO.DetailedBookingDTO;
 import org.example.assignment_backend_one.DTO.SmallBookingDTO;
 import org.example.assignment_backend_one.Services.BookingService;
@@ -10,16 +10,23 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import java.time.LocalDate;
 
+
+
 @Controller
-@RequiredArgsConstructor
+
 @RequestMapping("/bookings")
 public class BookingController {
     private final BookingService bookingService;
     private final CustomerService customerService;
     private final RoomService roomService;
+
+    public BookingController(BookingService bookingService, CustomerService customerService, RoomService roomService) {
+        this.bookingService = bookingService;
+        this.customerService = customerService;
+        this.roomService = roomService;
+    }
 
     @GetMapping("/new")
     public String showBookingForm(
@@ -79,10 +86,28 @@ public class BookingController {
 
         return "availableRooms";
     }
-
-
-
     @GetMapping("/editbooking/{id}")
+    public String showEditBookingForm(@PathVariable Long id, Model model) {
+        DetailedBookingDTO booking = bookingService.getBookingById(id);
+
+
+        SmallBookingDTO form = new SmallBookingDTO(
+                booking.getId(),
+                booking.getCustomer().getId(),
+                booking.getRoom().getId(),
+                booking.getStartDate(),
+                booking.getEndDate());
+
+        model.addAttribute("bookingForm", form);
+        model.addAttribute("customers", customerService.getAllDetailedCustomersDto());
+        model.addAttribute("rooms", roomService.getAllRooms());
+        return "editBooking";
+    }
+
+
+
+
+    /*@GetMapping("/editbooking/{id}")
     public String showEditBookingForm(@PathVariable Long id, Model model) {
         DetailedBookingDTO booking = bookingService.getBookingById(id);
 
@@ -98,7 +123,7 @@ public class BookingController {
         model.addAttribute("customers", customerService.getAllDetailedCustomersDto());
         model.addAttribute("rooms", roomService.getAllRooms());
         return "editBooking";
-    }
+    }*/
 
     @PostMapping("/editbooking")
     public String editBooking(@ModelAttribute SmallBookingDTO bookingForm,
