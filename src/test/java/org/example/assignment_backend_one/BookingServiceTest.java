@@ -1,11 +1,10 @@
-package org.example.assignment_backend_one.Services.impl;
+package org.example.assignment_backend_one;
 
 import org.example.assignment_backend_one.Models.Booking;
-import org.example.assignment_backend_one.Models.Customer;
 import org.example.assignment_backend_one.Models.Room;
 import org.example.assignment_backend_one.Repositories.BookingRepository;
-import org.example.assignment_backend_one.Repositories.CustomerRepository;
 import org.example.assignment_backend_one.Repositories.RoomRepository;
+import org.example.assignment_backend_one.Services.impl.BookingServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -25,10 +24,7 @@ class BookingServiceTest {
     @Mock
     private BookingRepository bookingRepository;
     @Mock
-    private CustomerRepository customerRepository;
-    @Mock
     private RoomRepository roomRepository;
-
     @InjectMocks
     private BookingServiceImpl bookingService;
 

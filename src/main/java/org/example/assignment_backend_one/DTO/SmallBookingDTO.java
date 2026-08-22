@@ -23,6 +23,7 @@ public class SmallBookingDTO {
         this.endDate = endDate;
     }
 
+
     public Long getId() {
         return id;
     }

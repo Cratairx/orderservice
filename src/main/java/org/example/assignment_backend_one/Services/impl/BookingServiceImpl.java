@@ -1,14 +1,13 @@
 package org.example.assignment_backend_one.Services.impl;
 import org.example.assignment_backend_one.DTO.BookingDTO;
-import org.example.assignment_backend_one.DTO.CustomerDTO;
 import org.example.assignment_backend_one.DTO.DetailedBookingDTO;
 import org.example.assignment_backend_one.DTO.RoomDTO;
 import org.example.assignment_backend_one.ENUMS.RoomType;
 import org.example.assignment_backend_one.Models.Booking;
-import org.example.assignment_backend_one.Models.Customer;
+
 import org.example.assignment_backend_one.Models.Room;
 import org.example.assignment_backend_one.Repositories.BookingRepository;
-import org.example.assignment_backend_one.Repositories.CustomerRepository;
+
 import org.example.assignment_backend_one.Repositories.RoomRepository;
 import org.example.assignment_backend_one.Services.BookingService;
 import org.springframework.stereotype.Service;
@@ -20,43 +19,39 @@ import java.util.stream.Collectors;
 @Service
 
 public class BookingServiceImpl implements BookingService {
-    public BookingServiceImpl(BookingRepository bookingRepository, CustomerRepository customerRepository, RoomRepository roomRepository) {
+    public BookingServiceImpl(BookingRepository bookingRepository, RoomRepository roomRepository) {
         this.bookingRepository = bookingRepository;
-        this.customerRepository = customerRepository;
+
         this.roomRepository = roomRepository;
     }
 
     private final BookingRepository bookingRepository;
-    private final CustomerRepository customerRepository;
+
     private final RoomRepository roomRepository;
 
 
     @Override
     public BookingDTO bookingToBookingDTO(Booking booking) {
-        return new BookingDTO(
+       /* return new BookingDTO(
                 booking.getId(),
                 new CustomerDTO(
                         booking.getCustomer().getId(),
-                        booking.getCustomer().getFirstName(),
-                        booking.getCustomer().getLastName()),
+
                 booking.getRoom(),
                 booking.getStartDate(),
-                booking.getEndDate());
+                booking.getEndDate()); */
     }
 
 
     @Override
     public DetailedBookingDTO bookingToDetailedDTO(Booking booking){
-        return new DetailedBookingDTO(
+       /* return new DetailedBookingDTO(
                 booking.getId(),
                 new CustomerDTO(
                 booking.getCustomer().getId(),
-                booking.getCustomer().getFirstName(),
-                booking.getCustomer().getLastName(),
-                booking.getCustomer().getEmail()),
                 booking.getRoom(),
                 booking.getStartDate(),
-                booking.getEndDate());
+                booking.getEndDate());*/
     }
 
     @Override
@@ -96,6 +91,7 @@ public class BookingServiceImpl implements BookingService {
                 .map(this::toRoomDTO)
                 .toList();
     }
+    // fråga yahya om hur man fixar en fråga nu när customerrepo inte är lokalt längre
 
     @Override
     public boolean updateBooking(Long id, Long customerId, Long roomId, LocalDate startDate, LocalDate endDate) {
