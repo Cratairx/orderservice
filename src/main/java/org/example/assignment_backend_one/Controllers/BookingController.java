@@ -1,12 +1,8 @@
 package org.example.assignment_backend_one.Controllers;
 
-import org.example.assignment_backend_one.DTO.DetailedBookingDTO;
-import org.example.assignment_backend_one.DTO.SmallBookingDTO;
 import org.example.assignment_backend_one.Services.BookingService;
-import org.example.assignment_backend_one.Services.CustomerService;
 import org.example.assignment_backend_one.Services.RoomService;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -14,17 +10,14 @@ import java.time.LocalDate;
 
 
 
-@Controller
-
+@RestController
 @RequestMapping("/bookings")
 public class BookingController {
     private final BookingService bookingService;
-    private final CustomerService customerService;
     private final RoomService roomService;
 
-    public BookingController(BookingService bookingService, CustomerService customerService, RoomService roomService) {
+    public BookingController(BookingService bookingService, RoomService roomService) {
         this.bookingService = bookingService;
-        this.customerService = customerService;
         this.roomService = roomService;
     }
 
@@ -35,7 +28,6 @@ public class BookingController {
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
 
-        model.addAttribute("customers", customerService.getAllDetailedCustomersDto());
         model.addAttribute("rooms", roomService.getAllRooms());
         model.addAttribute("selectedRoomId", roomId);
         model.addAttribute("startDate", startDate);
@@ -62,7 +54,6 @@ public class BookingController {
 
     @GetMapping
     public String listBookings(Model model) {
-        model.addAttribute("bookings", bookingService.getAllBookings());
         return "bookings";
     }
 
@@ -77,7 +68,6 @@ public class BookingController {
             if (endDate.isBefore(startDate)) {
                 model.addAttribute("error", "End date cannot be before start date.");
             } else {
-                model.addAttribute("rooms", bookingService.getAvailableRooms(startDate, endDate, guests));
                 model.addAttribute("startDate", startDate);
                 model.addAttribute("endDate", endDate);
                 model.addAttribute("guests", guests);
@@ -88,18 +78,7 @@ public class BookingController {
     }
     @GetMapping("/editbooking/{id}")
     public String showEditBookingForm(@PathVariable Long id, Model model) {
-        DetailedBookingDTO booking = bookingService.getBookingById(id);
 
-
-        SmallBookingDTO form = new SmallBookingDTO(
-                booking.getId(),
-                booking.getCustomer().getId(),
-                booking.getRoom().getId(),
-                booking.getStartDate(),
-                booking.getEndDate());
-
-        model.addAttribute("bookingForm", form);
-        model.addAttribute("customers", customerService.getAllDetailedCustomersDto());
         model.addAttribute("rooms", roomService.getAllRooms());
         return "editBooking";
     }
@@ -126,21 +105,15 @@ public class BookingController {
     }*/
 
     @PostMapping("/editbooking")
-    public String editBooking(@ModelAttribute SmallBookingDTO bookingForm,
-                              RedirectAttributes redirectAttributes) {
-
-        boolean success = bookingService.updateBooking(
-                bookingForm.getId(),
-                bookingForm.getCustomerId(),
-                bookingForm.getRoomId(),
-                bookingForm.getStartDate(),
-                bookingForm.getEndDate());
-
+    public String editBooking() {
+                /*
         if (success) {
             redirectAttributes.addFlashAttribute("success", "Bokning updaterad!");
         } else {
             redirectAttributes.addFlashAttribute("error", "kan inte updatera bookning.");
         }
+        */
+
         return "redirect:/bookings";
     }
 
@@ -152,7 +125,7 @@ public class BookingController {
         } else {
             redirectAttributes.addFlashAttribute("error", "Bookning finns inte.");
         }
-        model.addAttribute("bookings", bookingService.getAllBookings());
+
         return "redirect:/bookings";
     }
 

@@ -5,11 +5,6 @@ import jakarta.persistence.*;
 import org.example.assignment_backend_one.ENUMS.RoomType;
 
 @Entity
-/*@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder*/
-
 public class Room {
 
     @Id

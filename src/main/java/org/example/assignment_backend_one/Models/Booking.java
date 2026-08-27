@@ -1,15 +1,9 @@
 package org.example.assignment_backend_one.Models;
 import jakarta.persistence.*;
-import org.example.assignment_backend_one.DTO.CustomerDTO;
 
 import java.time.LocalDate;
 
 @Entity
-/* @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder */
-
 public class Booking {
 
     @Id
@@ -18,22 +12,19 @@ public class Booking {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id")
-    private Customer customer;
-
-    @ManyToOne
     @JoinColumn(name = "room_id")
     private Room room;
     private LocalDate startDate;
     private LocalDate endDate;
+    private Long customerID;
 
     public Booking() {
 
     }
-    public Booking(Long id, Customer customer, Room room, LocalDate startDate, LocalDate endDate) {
+    public Booking(Long id, Room room, Long customerID, LocalDate startDate, LocalDate endDate) {
         this.id = id;
-        this.customer = customer;
         this.room = room;
+        this.customerID = customerID;
         this.startDate = startDate;
         this.endDate = endDate;
     }
@@ -46,12 +37,12 @@ public class Booking {
         this.id = id;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public Long getCustomer() {
+        return customerID;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setCustomer(Long customerID) {
+        this.customerID = customerID;
     }
 
     public Room getRoom() {

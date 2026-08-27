@@ -1,7 +1,5 @@
 package org.example.assignment_backend_one.Controllers;
 
-import jakarta.servlet.http.HttpSession;
-import org.example.assignment_backend_one.DTO.DetailedRoomDTO;
 import org.example.assignment_backend_one.ENUMS.RoomType;
 import org.example.assignment_backend_one.Models.Room;
 import org.example.assignment_backend_one.Services.impl.RoomServiceImpl;
@@ -27,7 +25,7 @@ public class RoomController {
         return "roomForm";
     }
 
-
+/*
     @PostMapping("/new")
     public String createRoom(@ModelAttribute DetailedRoomDTO room, HttpSession session, RedirectAttributes redirectAttributes) {
 
@@ -44,7 +42,7 @@ public class RoomController {
 
 
     }
-
+*/
 
     // Visar alla rum
     @GetMapping
@@ -70,11 +68,6 @@ public class RoomController {
         roomService.saveRoom(room);
         return "redirect:/rooms";
     }
-
-
-
-
-
 
     // Tar bort ett rum och redirectar tillbaka till rumlistan
     @PostMapping("/delete/{id}")
