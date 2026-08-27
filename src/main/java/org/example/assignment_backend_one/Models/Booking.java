@@ -37,11 +37,11 @@ public class Booking {
         this.id = id;
     }
 
-    public Long getCustomer() {
+    public Long getCustomerID() {
         return customerID;
     }
 
-    public void setCustomer(Long customerID) {
+    public void setCustomerID(Long customerID) {
         this.customerID = customerID;
     }
 
