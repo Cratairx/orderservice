@@ -4,14 +4,11 @@ import org.example.assignment_backend_one.DTO.DetailedBookingDTO;
 import org.example.assignment_backend_one.DTO.RoomDTO;
 import org.example.assignment_backend_one.ENUMS.RoomType;
 import org.example.assignment_backend_one.Models.Booking;
-
 import org.example.assignment_backend_one.Models.Room;
 import org.example.assignment_backend_one.Repositories.BookingRepository;
-
 import org.example.assignment_backend_one.Repositories.RoomRepository;
 import org.example.assignment_backend_one.Services.BookingService;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
