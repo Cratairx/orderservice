@@ -1,12 +1,15 @@
 package org.example.assignment_backend_one.Controllers;
 
+import org.example.assignment_backend_one.Models.Booking;
+import org.example.assignment_backend_one.Models.Room;
 import org.example.assignment_backend_one.Services.BookingService;
 import org.example.assignment_backend_one.Services.RoomService;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.time.LocalDate;
-
+import java.util.List;
 
 
 @RestController
@@ -20,71 +23,55 @@ public class BookingController {
         this.roomService = roomService;
     }
 
-    @GetMapping("/new")
-    public String showBookingForm(
-
-            @RequestParam(required = false) Long roomId,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
-
-        return "createBooking";
-    }
-
-    @PostMapping("/new")
-    public String createBooking(
+    @PostMapping
+    public ResponseEntity<?> createBooking(
             @RequestParam Long customerId,
             @RequestParam Long roomId,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
-            RedirectAttributes redirectAttributes) {
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
 
         boolean success = bookingService.createBooking(customerId, roomId, startDate, endDate);
-        if (success) {
-            redirectAttributes.addFlashAttribute("success", "Bokning skapad!");
-        } else {
-            redirectAttributes.addFlashAttribute("error", "Room is already booked for those dates.");
-        }
-        return "redirect:/bookings/new";
-    }
-
-    @GetMapping
-    public String listBookings() {
-        return "bookings";
+        return success
+                ? ResponseEntity.status(HttpStatus.CREATED).build()
+                : ResponseEntity.status(HttpStatus.CONFLICT).body("Room unavailable or invalid customer");
     }
 
     @GetMapping("/available")
-    public String showAvailableRooms(
+    public ResponseEntity<List<Room>> availableRooms(
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
-            @RequestParam(required = false, defaultValue = "1") int guests) {
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
 
-        if (startDate != null && endDate != null) {
-            if (endDate.isBefore(startDate)) {
-
-            } else {
-
-            }
+        if (endDate.isBefore(startDate)) {
+            return ResponseEntity.badRequest().build();
         }
-
-        return "availableRooms";
-    }
-    @GetMapping("/editbooking/{id}")
-    public String showEditBookingForm(@PathVariable Long id) {
-
-        return "editBooking";
+        return ResponseEntity.ok(roomService.getAvailableRooms(startDate, endDate));
     }
 
-    @PostMapping("/editbooking")
-    public String editBooking() {
-        return "/booking";
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateBooking(
+            @PathVariable Long id,
+            @RequestParam Long roomId,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+
+        boolean success = bookingService.updateBooking(id, roomId, startDate, endDate);
+        return success
+                ? ResponseEntity.ok().build()
+                : ResponseEntity.status(HttpStatus.CONFLICT).body("Update failed: conflict or not found");
+
     }
 
-    @PostMapping("/deletebooking/{id}")
-    public String deleteBooking(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteBooking(@PathVariable Long id) {
         boolean success = bookingService.deleteBooking(id);
-
-        return "/bookings";
+        return success
+                ? ResponseEntity.noContent().build()
+                : ResponseEntity.notFound().build();
     }
 
+    @GetMapping
+    public List<Booking> listBookings() {
+        return bookingService.getAllBookings();
+    }
 
 }

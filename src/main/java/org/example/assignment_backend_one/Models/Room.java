@@ -38,7 +38,7 @@ public class Room {
     }
 
     @Enumerated(EnumType.STRING)
-    private RoomType roomType; // SINGLE eller DOUBLE
+    private RoomType roomType;
 
     public Room() {
 

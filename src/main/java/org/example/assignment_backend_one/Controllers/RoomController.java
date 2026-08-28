@@ -2,82 +2,62 @@ package org.example.assignment_backend_one.Controllers;
 
 import org.example.assignment_backend_one.ENUMS.RoomType;
 import org.example.assignment_backend_one.Models.Room;
-import org.example.assignment_backend_one.Services.impl.RoomServiceImpl;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.example.assignment_backend_one.Services.RoomService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import java.util.List;
 
-@Controller
-@RequestMapping("/rooms")
+@RestController
+@RequestMapping("/api/rooms")
 public class RoomController {
 
-    private final RoomServiceImpl roomService;
+    private final RoomService roomService;
 
-    public RoomController( RoomServiceImpl roomService) {
+    public RoomController(RoomService roomService) {
         this.roomService = roomService;
     }
 
-    @GetMapping("/new")
-    public String showRoomForm(Model model) {
-
-        model.addAttribute("roomTypes", RoomType.values());
-        return "roomForm";
-    }
-
-/*
-    @PostMapping("/new")
-    public String createRoom(@ModelAttribute DetailedRoomDTO room, HttpSession session, RedirectAttributes redirectAttributes) {
-
-      Room newRoom = new Room();
-      newRoom.setRoomNumber(room.getRoomNumber());
-      newRoom.setRoomType(room.getRoomType());
-      Room savedRoom = roomService.saveRoom(newRoom);
-      if (savedRoom != null) {
-          redirectAttributes.addFlashAttribute("message", "Room has been saved successfully");
-      }else{
-          redirectAttributes.addFlashAttribute("error", "Room could not be saved");
-      }
-        return "redirect:/rooms/new";
-
-
-    }
-*/
-
-    // Visar alla rum
     @GetMapping
-    public String listRooms(Model model) {
-        model.addAttribute("rooms", roomService.getAllRooms());
-        return "rooms";
+    public List<Room> listRooms() {
+        return roomService.getAllRooms();
     }
-    @GetMapping("/editroom/{id}")
-    public String showRoomForm(@PathVariable Long id, Model model) {
-        Room room = roomService.getRoomById(id);
-        model.addAttribute("room", room);
-        model.addAttribute("roomTypes", RoomType.values());
-        return "editRoom";
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Room> getRoom(@PathVariable Long id) {
+        return ResponseEntity.ok(roomService.getRoomById(id));
     }
-    @PostMapping("editroom/{id}")
-    public String editRoom(@PathVariable Long id,
-                           @RequestParam RoomType roomType,
-                           @RequestParam String roomNumber ) {
+
+    @PostMapping
+    public ResponseEntity<Room> createRoom(
+            @RequestParam String roomNumber,
+            @RequestParam RoomType roomType) {
+
+        Room room = new Room();
+        room.setRoomNumber(roomNumber);
+        room.setRoomType(roomType);
+        Room saved = roomService.saveRoom(room);
+        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Room> editRoom(
+            @PathVariable Long id,
+            @RequestParam RoomType roomType,
+            @RequestParam String roomNumber) {
 
         Room room = roomService.getRoomById(id);
         room.setRoomNumber(roomNumber);
         room.setRoomType(roomType);
-        roomService.saveRoom(room);
-        return "redirect:/rooms";
+        return ResponseEntity.ok(roomService.saveRoom(room));
     }
 
-    // Tar bort ett rum och redirectar tillbaka till rumlistan
-    @PostMapping("/delete/{id}")
-    public String deleteRoom(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteRoom(@PathVariable Long id) {
         boolean success = roomService.deleteRoom(id);
-        if (success) {
-            redirectAttributes.addFlashAttribute("success", "Rummet togs bort.");
-        } else {
-            redirectAttributes.addFlashAttribute("error", "Rummet hittades inte.");
-        }
-        return "redirect:/rooms";
+        return success
+                ? ResponseEntity.noContent().build()
+                : ResponseEntity.notFound().build();
     }
+
 }

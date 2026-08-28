@@ -4,6 +4,8 @@ import org.example.assignment_backend_one.Models.Room;
 import org.example.assignment_backend_one.Repositories.RoomRepository;
 import org.example.assignment_backend_one.Services.RoomService;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -44,6 +46,11 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public boolean saveRoom(Long id) {
         return  roomRepository.existsById(id);
+    }
+
+    @Override
+    public List<Room> getAvailableRooms(LocalDate startDate, LocalDate endDate) {
+        return roomRepository.findAvailableRooms(startDate, endDate);
     }
 
 }

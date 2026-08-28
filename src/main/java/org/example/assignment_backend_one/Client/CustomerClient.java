@@ -9,7 +9,7 @@ import org.springframework.web.client.RestClient;
 public class CustomerClient {
     private final RestClient restClient;
 
-    public CustomerClient(@Value("${customer-servicel}") String baseUrl) {
+    public CustomerClient(@Value("${customer-service.base-url}") String baseUrl) {
         this.restClient = RestClient.create(baseUrl);
     }
 
@@ -22,4 +22,3 @@ public class CustomerClient {
         }
     }
 }
-//Hallå

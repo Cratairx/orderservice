@@ -1,6 +1,9 @@
 package org.example.assignment_backend_one.Services;
 
+import org.example.assignment_backend_one.Models.Booking;
+
 import java.time.LocalDate;
+import java.util.List;
 
 public interface BookingService {
 
@@ -9,4 +12,7 @@ public interface BookingService {
     boolean updateBooking(Long id, Long roomId, LocalDate startDate, LocalDate endDate);
 
     boolean deleteBooking(Long id);
+
+    List<Booking> getAllBookings();
+
 }

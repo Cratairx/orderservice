@@ -1,17 +1,37 @@
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: title
-  labels:
-    role: title
+  name: booking-db
 spec:
-  containers:
-    - name: title
-      image: nginx
-      imagePullPolicy: IfNotPresent
-      ports:
-        - name: title
-          containerPort: 80
-          protocol: TCP
-  restartPolicy: Always
-  
+  replicas: 1
+  selector:
+    matchLabels:
+      app: booking-db
+  template:
+    metadata:
+      labels:
+        app: booking-db
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:8
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: root
+            - name: MYSQL_DATABASE
+              value: bookingdb
+          ports:
+            - containerPort: 3306
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: booking-db
+spec:
+  selector:
+    app: booking-db
+  ports:
+    - port: 3306
+      targetPort: 3306
