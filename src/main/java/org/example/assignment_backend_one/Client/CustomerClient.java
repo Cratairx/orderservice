@@ -9,16 +9,13 @@ import org.springframework.web.client.RestClient;
 public class CustomerClient {
     private final RestClient restClient;
 
-    public CustomerClient(@Value("${customer-service.base-url}") String baseUrl) {
+    public CustomerClient(@Value("${customer-servicel}") String baseUrl) {
         this.restClient = RestClient.create(baseUrl);
     }
 
     public boolean customerExists(Long customerId) {
         try {
-            restClient.get()
-                    .uri("/customers/{id}", customerId)
-                    .retrieve()
-                    .toBodilessEntity();
+            restClient.get().uri("/customers/{id}", customerId).retrieve().toBodilessEntity();
             return true;
         } catch (HttpClientErrorException.NotFound e) {
             return false;

@@ -48,6 +48,8 @@ public class BookingServiceImpl implements BookingService {
         Booking booking = bookingRepository.findById(id).orElse(null);
         Room room = roomRepository.findById(roomId).orElse(null);
 
+        if (booking == null || room == null) return false;
+
         boolean hasConflict = bookingRepository.existsOverlappingBooking(roomId, startDate, endDate, id);
         if (hasConflict) return false;
 

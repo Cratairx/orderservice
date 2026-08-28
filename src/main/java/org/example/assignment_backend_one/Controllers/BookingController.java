@@ -10,7 +10,7 @@ import java.time.LocalDate;
 
 
 @RestController
-@RequestMapping("/bookings")
+@RequestMapping("/api/bookings")
 public class BookingController {
     private final BookingService bookingService;
     private final RoomService roomService;
