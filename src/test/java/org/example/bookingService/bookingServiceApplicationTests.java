@@ -1,7 +1,7 @@
-package org.example.assignment_backend_one;
+package org.example.bookingService;
 
-import org.example.assignment_backend_one.Controllers.CustomerController;
-import org.example.assignment_backend_one.Models.Customer;
+import org.example.bookingService.Controllers.CustomerController;
+import org.example.bookingService.Models.Customer;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.resttestclient.autoconfigure.AutoConfigureRestTestClient;
@@ -13,7 +13,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureRestTestClient
-class AssignmentBackendOneApplicationTests {
+class bookingServiceApplicationTests {
     @Autowired
     private CustomerController customer;
 

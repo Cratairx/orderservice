@@ -1,8 +1,8 @@
-package org.example.assignment_backend_one.Controllers;
+package org.example.bookingService.Controllers;
 
-import org.example.assignment_backend_one.ENUMS.RoomType;
-import org.example.assignment_backend_one.Models.Room;
-import org.example.assignment_backend_one.Services.RoomService;
+import org.example.bookingService.ENUMS.RoomType;
+import org.example.bookingService.Models.Room;
+import org.example.bookingService.Services.RoomService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

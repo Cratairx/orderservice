@@ -1,4 +1,4 @@
-package org.example.assignment_backend_one.Models;
+package org.example.bookingService.Models;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;

@@ -1,9 +1,9 @@
-package org.example.assignment_backend_one.Controllers;
+package org.example.bookingService.Controllers;
 
-import org.example.assignment_backend_one.Models.Booking;
-import org.example.assignment_backend_one.Models.Room;
-import org.example.assignment_backend_one.Services.BookingService;
-import org.example.assignment_backend_one.Services.RoomService;
+import org.example.bookingService.Models.Booking;
+import org.example.bookingService.Models.Room;
+import org.example.bookingService.Services.BookingService;
+import org.example.bookingService.Services.RoomService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

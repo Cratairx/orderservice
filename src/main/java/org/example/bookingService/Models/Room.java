@@ -1,8 +1,8 @@
-package org.example.assignment_backend_one.Models;
+package org.example.bookingService.Models;
 
 import jakarta.persistence.*;
 
-import org.example.assignment_backend_one.ENUMS.RoomType;
+import org.example.bookingService.ENUMS.RoomType;
 
 @Entity
 public class Room {

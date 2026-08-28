@@ -9,7 +9,7 @@
         <relativePath/>
     </parent>
     <groupId>org.example</groupId>
-    <artifactId>Assignment_Backend_One</artifactId>
+    <artifactId>booking-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>Assignment_Backend_One</name>
     <description>Assignment_Backend_One</description>

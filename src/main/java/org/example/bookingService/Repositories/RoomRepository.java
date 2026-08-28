@@ -1,6 +1,6 @@
-package org.example.assignment_backend_one.Repositories;
+package org.example.bookingService.Repositories;
 
-import org.example.assignment_backend_one.Models.Room;
+import org.example.bookingService.Models.Room;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

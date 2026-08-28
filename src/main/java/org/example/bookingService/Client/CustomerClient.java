@@ -1,4 +1,4 @@
-package org.example.assignment_backend_one.Client;
+package org.example.bookingService.Client;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

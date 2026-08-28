@@ -1,4 +1,4 @@
-package org.example.assignment_backend_one.ENUMS;
+package org.example.bookingService.ENUMS;
 
 public enum BookingStatus {
     PENDING,

@@ -1,11 +1,11 @@
-package org.example.assignment_backend_one.Services.impl;
+package org.example.bookingService.Services.impl;
 
-import org.example.assignment_backend_one.Client.CustomerClient;
-import org.example.assignment_backend_one.Models.Booking;
-import org.example.assignment_backend_one.Models.Room;
-import org.example.assignment_backend_one.Repositories.BookingRepository;
-import org.example.assignment_backend_one.Repositories.RoomRepository;
-import org.example.assignment_backend_one.Services.BookingService;
+import org.example.bookingService.Client.CustomerClient;
+import org.example.bookingService.Models.Booking;
+import org.example.bookingService.Models.Room;
+import org.example.bookingService.Repositories.BookingRepository;
+import org.example.bookingService.Repositories.RoomRepository;
+import org.example.bookingService.Services.BookingService;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;

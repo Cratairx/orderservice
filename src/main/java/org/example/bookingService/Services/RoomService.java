@@ -1,6 +1,6 @@
-package org.example.assignment_backend_one.Services;
+package org.example.bookingService.Services;
 
-import org.example.assignment_backend_one.Models.Room;
+import org.example.bookingService.Models.Room;
 
 import java.time.LocalDate;
 import java.util.List;

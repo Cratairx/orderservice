@@ -1,4 +1,4 @@
-package org.example.assignment_backend_one.Config;
+package org.example.bookingService.Config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
