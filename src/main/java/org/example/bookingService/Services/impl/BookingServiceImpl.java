@@ -8,6 +8,8 @@ import org.example.bookingService.Repositories.BookingRepository;
 import org.example.bookingService.Repositories.RoomRepository;
 import org.example.bookingService.Services.BookingService;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -88,6 +90,14 @@ public class BookingServiceImpl implements BookingService {
     public Booking getBookingByCustomerId(Long customerId) {
         return bookingRepository.findById(customerId)
                 .orElseThrow(() -> new RuntimeException("Room not found with id: " + customerId));    }
+
+    @Override
+    public boolean hasBookingsForCustomer(Long customerId) {
+        return bookingRepository.existsBookingForCustomer(customerId);
+    }
+
+
+
 
 }
 

@@ -19,5 +19,7 @@ public interface BookingRepository extends JpaRepository<Booking,Long> {
             @Param("endDate") LocalDate endDate,
             @Param("excludeId") Long excludeId
     );
+    @Query("SELECT COUNT(booking) > 0 FROM Booking booking WHERE booking.customerID = :customerId")
+    boolean existsBookingForCustomer(@Param("customerId") Long customerId);
 
 }

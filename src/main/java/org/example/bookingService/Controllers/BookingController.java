@@ -83,6 +83,10 @@ public class BookingController {
         }
         return ResponseEntity.ok(booking);
     }
+    @GetMapping("/exists")
+    public ResponseEntity<Boolean> existsBookings(@RequestParam Long customerId) {
+        return ResponseEntity.ok(bookingService.hasBookingsForCustomer(customerId));
+    }
 
 }
 
