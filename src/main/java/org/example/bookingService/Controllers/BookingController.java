@@ -41,9 +41,10 @@ public class BookingController {
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
 
-        if (endDate.isBefore(startDate)) {
-            return ResponseEntity.badRequest().build();
-        }
+       if(startDate== null || endDate==null || !startDate.isBefore(endDate)){
+           return ResponseEntity.badRequest().build();
+
+       }
         return ResponseEntity.ok(roomService.getAvailableRooms(startDate, endDate));
     }
 
@@ -74,4 +75,15 @@ public class BookingController {
         return bookingService.getAllBookings();
     }
 
+    @GetMapping("/getbooking/{id}")
+    public ResponseEntity<Booking> getBooking(@PathVariable Long id) {
+        Booking booking = bookingService.getBookingByCustomerId(id);
+        if (booking == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(booking);
+    }
+
 }
+
+
