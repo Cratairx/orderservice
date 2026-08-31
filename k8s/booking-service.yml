@@ -25,7 +25,10 @@ spec:
               value: root
             - name: SPRING_DATASOURCE_PASSWORD
               value: root
-
+            - name: CUSTOMER_SERVICE_BASE_URL
+              value: http://customer-service:8080
+            - name: SERVER_PORT
+              value: "8081"
 ---
 
 apiVersion: v1

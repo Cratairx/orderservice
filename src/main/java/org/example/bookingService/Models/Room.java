@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 
 import org.example.bookingService.ENUMS.RoomType;
 
+import java.util.Objects;
+
 @Entity
 public class Room {
 
@@ -12,6 +14,19 @@ public class Room {
     private Long id;
 
     private String roomNumber;
+
+    @Enumerated(EnumType.STRING)
+    private RoomType roomType;
+
+    public Room() {
+
+    }
+
+    public Room(Long id, String roomNumber, RoomType roomType) {
+        this.id = id;
+        this.roomNumber = roomNumber;
+        this.roomType = roomType;
+    }
 
     public Long getId() {
         return id;
@@ -37,15 +52,17 @@ public class Room {
         this.roomType = roomType;
     }
 
-    @Enumerated(EnumType.STRING)
-    private RoomType roomType;
-
-    public Room() {
-
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Room)) return false;
+        Room room = (Room) o;
+        return id != null && id.equals(room.id);
     }
-    public Room(Long id, String roomNumber, RoomType roomType) {
-        this.id = id;
-        this.roomNumber = roomNumber;
-        this.roomType = roomType;
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
+
 }

@@ -1,5 +1,6 @@
 package org.example.bookingService.Services.impl;
 
+import jakarta.transaction.Transactional;
 import org.example.bookingService.Client.CustomerClient;
 import org.example.bookingService.Models.Booking;
 import org.example.bookingService.Models.Room;
@@ -24,15 +25,18 @@ public class BookingServiceImpl implements BookingService {
     private final CustomerClient customerClient;
 
     @Override
+    @Transactional
     public boolean createBooking(Long customerId, Long roomId, LocalDate startDate, LocalDate endDate) {
+
+        if (startDate == null || endDate == null || !startDate.isBefore(endDate)) return false;
 
         if (!customerClient.customerExists(customerId)) return false;
 
         Room room = roomRepository.findById(roomId).orElse(null);
         if (room == null) return false;
 
-        List<Room> availableRooms = roomRepository.findAvailableRooms(startDate, endDate);
-        if (!availableRooms.contains(room)) return false;
+        boolean hasConflict = bookingRepository.existsOverlappingBooking(roomId, startDate, endDate, customerId);
+        if (hasConflict) return false;
 
         Booking booking = new Booking();
         booking.setRoom(room);
@@ -44,7 +48,11 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
+    @Transactional
     public boolean updateBooking(Long id, Long roomId, LocalDate startDate, LocalDate endDate) {
+
+        if (startDate == null || endDate == null || !startDate.isBefore(endDate)) return false;
+
         Booking booking = bookingRepository.findById(id).orElse(null);
         Room room = roomRepository.findById(roomId).orElse(null);
 
@@ -61,6 +69,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
+    @Transactional
     public boolean deleteBooking(Long id) {
         if (bookingRepository.existsById(id)) {
             bookingRepository.deleteById(id);
