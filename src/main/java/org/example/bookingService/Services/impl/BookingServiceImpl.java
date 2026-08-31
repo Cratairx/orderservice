@@ -83,5 +83,11 @@ public class BookingServiceImpl implements BookingService {
         return bookingRepository.findAll();
     }
 
+    @Override
+    @Transactional
+    public Booking getBookingByCustomerId(Long customerId) {
+        return bookingRepository.findById(customerId)
+                .orElseThrow(() -> new RuntimeException("Room not found with id: " + customerId));    }
+
 }
 
