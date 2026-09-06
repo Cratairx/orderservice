@@ -28,6 +28,11 @@ public class Room {
         this.roomType = roomType;
     }
 
+    public Room(String number, RoomType roomType) {
+        this.roomNumber = number;
+        this.roomType = roomType;
+    }
+
     public Long getId() {
         return id;
     }

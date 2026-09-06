@@ -58,7 +58,7 @@ public class BookingController {
         boolean success = bookingService.updateBooking(id, roomId, startDate, endDate);
         return success
                 ? ResponseEntity.ok().build()
-                : ResponseEntity.status(HttpStatus.CONFLICT).body("Update failed: conflict or not found");
+                : ResponseEntity.status(HttpStatus.CONFLICT).body("Overlapping booking");
 
     }
 
