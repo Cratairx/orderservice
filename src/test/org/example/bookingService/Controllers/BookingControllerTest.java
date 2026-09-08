@@ -31,7 +31,7 @@ class BookingControllerTest {
     private RoomService roomService;
 
     @Test
-    void createBooking_returns201_whenSuccessful() throws Exception {
+    void createBookingReturns201WhenSuccessful() throws Exception {
         when(bookingService.createBooking(1L, 2L, java.time.LocalDate.parse("2026-09-10"), java.time.LocalDate.parse("2026-09-12")))
                 .thenReturn(true);
 
@@ -44,7 +44,7 @@ class BookingControllerTest {
     }
 
     @Test
-    void createBooking_returns409_whenServiceRejects() throws Exception {
+    void createBookingReturns409WhenServiceRejects() throws Exception {
         when(bookingService.createBooking(anyLong(), anyLong(), any(), any())).thenReturn(false);
 
         mockMvc.perform(post("/api/bookings")
@@ -56,14 +56,14 @@ class BookingControllerTest {
     }
 
     @Test
-    void availableRooms_returns400_whenDatesMissing() throws Exception {
+    void availableRoomsReturns400WhenDatesMissing() throws Exception {
         mockMvc.perform(get("/api/bookings/available"))
                 .andExpect(status().isBadRequest());
         verifyNoInteractions(roomService);
     }
 
     @Test
-    void availableRooms_returns400_whenStartNotBeforeEnd() throws Exception {
+    void availableRoomsReturns400WhenStartNotBeforeEnd() throws Exception {
         mockMvc.perform(get("/api/bookings/available")
                         .param("startDate", "2026-09-12")
                         .param("endDate", "2026-09-10"))
@@ -71,7 +71,7 @@ class BookingControllerTest {
     }
 
     @Test
-    void availableRooms_returnsOk_withRoomsList() throws Exception {
+    void availableRoomsReturnsOkWithRoomsList() throws Exception {
         when(roomService.getAvailableRooms(any(), any())).thenReturn(List.of(new Room(1L, "101", null)));
 
         mockMvc.perform(get("/api/bookings/available")
@@ -82,7 +82,7 @@ class BookingControllerTest {
     }
 
     @Test
-    void updateBooking_returnsOk_whenSuccessful() throws Exception {
+    void updateBookingReturnsOkWhenSuccessful() throws Exception {
         when(bookingService.updateBooking(eq(5L), anyLong(), any(), any())).thenReturn(true);
 
         mockMvc.perform(put("/api/bookings/5")
@@ -93,7 +93,7 @@ class BookingControllerTest {
     }
 
     @Test
-    void updateBooking_returns409_whenConflict() throws Exception {
+    void updateBookingReturns409WhenConflict() throws Exception {
         when(bookingService.updateBooking(eq(5L), anyLong(), any(), any())).thenReturn(false);
 
         mockMvc.perform(put("/api/bookings/5")
@@ -104,7 +104,7 @@ class BookingControllerTest {
     }
 
     @Test
-    void deleteBooking_returns204_whenDeleted() throws Exception {
+    void deleteBookingReturns204WhenDeleted() throws Exception {
         when(bookingService.deleteBooking(5L)).thenReturn(true);
 
         mockMvc.perform(delete("/api/bookings/5"))
@@ -112,7 +112,7 @@ class BookingControllerTest {
     }
 
     @Test
-    void deleteBooking_returns404_whenNotFound() throws Exception {
+    void deleteBookingReturns404WhenNotFound() throws Exception {
         when(bookingService.deleteBooking(5L)).thenReturn(false);
 
         mockMvc.perform(delete("/api/bookings/5"))
@@ -120,7 +120,7 @@ class BookingControllerTest {
     }
 
     @Test
-    void listBookings_returnsOk() throws Exception {
+    void listBookingsReturnsOk() throws Exception {
         when(bookingService.getAllBookings()).thenReturn(List.of(new Booking()));
 
         mockMvc.perform(get("/api/bookings"))
@@ -128,7 +128,7 @@ class BookingControllerTest {
     }
 
     @Test
-    void existsBookings_returnsBooleanBody() throws Exception {
+    void existsBookingsReturnsBooleanBody() throws Exception {
         when(bookingService.hasBookingsForCustomer(1L)).thenReturn(true);
 
         mockMvc.perform(get("/api/bookings/exists").param("customerId", "1"))

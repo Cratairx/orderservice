@@ -31,7 +31,7 @@ class RoomServiceImplTest {
     }
 
     @Test
-    void getAllRooms_returnsRepositoryResult() {
+    void getAllRoomsReturnsRepositoryResult() {
         List<Room> rooms = List.of(new Room(1L, "101", RoomType.SINGLE));
         when(roomRepository.findAll()).thenReturn(rooms);
 
@@ -39,7 +39,7 @@ class RoomServiceImplTest {
     }
 
     @Test
-    void saveRoom_persistsAndReturnsRoom() {
+    void saveRoomPersistsAndReturnsRoom() {
         Room room = new Room(null, "202", RoomType.DOUBLE);
         Room saved = new Room(1L, "202", RoomType.DOUBLE);
         when(roomRepository.save(room)).thenReturn(saved);
@@ -48,7 +48,7 @@ class RoomServiceImplTest {
     }
 
     @Test
-    void deleteRoom_deletesAndReturnsTrue_whenExists() {
+    void deleteRoomDeletesAndReturnsTrueWhenExists() {
         when(roomRepository.existsById(1L)).thenReturn(true);
 
         assertThat(roomService.deleteRoom(1L)).isTrue();
@@ -56,7 +56,7 @@ class RoomServiceImplTest {
     }
 
     @Test
-    void deleteRoom_returnsFalse_whenNotExists() {
+    void deleteRoomReturnsFalseWhenNotExists() {
         when(roomRepository.existsById(1L)).thenReturn(false);
 
         assertThat(roomService.deleteRoom(1L)).isFalse();
@@ -64,7 +64,7 @@ class RoomServiceImplTest {
     }
 
     @Test
-    void getRoomById_returnsRoom_whenFound() {
+    void getRoomByIdReturnsRoomWhenFound() {
         Room room = new Room(1L, "101", RoomType.SINGLE);
         when(roomRepository.findById(1L)).thenReturn(Optional.of(room));
 
@@ -72,7 +72,7 @@ class RoomServiceImplTest {
     }
 
     @Test
-    void getRoomById_throws_whenNotFound() {
+    void getRoomByIdThrowsWhenNotFound() {
         when(roomRepository.findById(1L)).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> roomService.getRoomById(1L))
@@ -81,14 +81,14 @@ class RoomServiceImplTest {
     }
 
     @Test
-    void saveRoomById_delegatesExistsCheck() {
+    void saveRoomByIdDelegatesExistsCheck() {
         when(roomRepository.existsById(1L)).thenReturn(true);
 
         assertThat(roomService.saveRoom(1L)).isTrue();
     }
 
     @Test
-    void getAvailableRooms_delegatesToRepositoryQuery() {
+    void getAvailableRoomsDelegatesToRepositoryQuery() {
         LocalDate start = LocalDate.of(2026, 9, 10);
         LocalDate end = LocalDate.of(2026, 9, 12);
         List<Room> available = List.of(new Room(2L, "303", RoomType.DOUBLE));
