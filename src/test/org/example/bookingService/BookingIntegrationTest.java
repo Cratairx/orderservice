@@ -84,7 +84,7 @@ class BookingIntegrationTest {
     }
 
     @Test
-    void createBooking_persistsToDatabase_whenCustomerExistsAndRoomIsFree() {
+    void createBookingPersistsToDatabaseWhenCustomerExistsAndRoomIsFree() {
         customerServiceMock.enqueue(new MockResponse().setResponseCode(200));
 
         ResponseEntity<Void> response = restTemplate.postForEntity(
@@ -98,7 +98,7 @@ class BookingIntegrationTest {
     }
 
     @Test
-    void createBooking_returnsConflict_whenCustomerServiceReports404() {
+    void createBookingReturnsConflictWhenCustomerServiceReports404() {
         customerServiceMock.enqueue(new MockResponse().setResponseCode(404));
 
         ResponseEntity<String> response = restTemplate.postForEntity(
@@ -111,7 +111,7 @@ class BookingIntegrationTest {
     }
 
     @Test
-    void createBooking_returnsConflict_whenRoomAlreadyBookedForOverlappingDates() {
+    void createBookingReturnsConflictWhenRoomAlreadyBookedForOverlappingDates() {
         customerServiceMock.enqueue(new MockResponse().setResponseCode(200));
         restTemplate.postForEntity(
                 "/api/bookings?customerId=1&roomId=" + room.getId()
@@ -129,7 +129,7 @@ class BookingIntegrationTest {
     }
 
     @Test
-    void availableRooms_excludesBookedRoom() {
+    void availableRoomsExcludesBookedRoom() {
         customerServiceMock.enqueue(new MockResponse().setResponseCode(200));
         restTemplate.postForEntity(
                 "/api/bookings?customerId=1&roomId=" + room.getId()
