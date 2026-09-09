@@ -7,31 +7,41 @@ A small hotel booking system built as four separate repositories that together f
 | [`customerservice`](https://github.com/Cratairx/customerservice) | Manages customer records | `8080` | `customerdb` (MySQL) |
 | [`orderservice`](https://github.com/Cratairx/orderservice) | Manages rooms & bookings | `8081` | `bookingdb` (MySQL) |
 | [`reviewservice`](https://github.com/EmilDrougge/reviewservice) | Manages reviews of completed stays | `8082` | `review_db` (MySQL) |
-| [`FrontEnd`](https://github.com/Cratairx/FrontEnd) | Client UI | — | — |
+| [`webhotell`](https://github.com/Cratairx/webhotell) | React frontend | `5173` | — |
 
-All three backend services are Spring Boot (Java 17) apps, each with its own MySQL database, and they talk to each other over plain HTTP using each other's Docker service name.
+All three backend services are Spring Boot (Java 17) apps, each with its own MySQL database, and they talk to each other over plain HTTP using each other's Docker service name. The frontend is a React + Vite single-page app that talks to all three backend services directly from the browser.
 
-> **Note on the frontend:** the `FrontEnd` repo, as it currently stands, is a static HTML/CSS practice site (tutorial pages, a bootstrap exercise, lorem-ipsum content) with no JavaScript and no calls to any of the three APIs. It isn't wired up to the backend yet. The backend services already have CORS opened for `http://localhost:5173` (the default Vite dev server port), which tells us the intended frontend is a JS app (React/Vue/etc. served by Vite) that hasn't landed in that repo yet. Section 4 below covers both: how to serve the existing static files, and how to interact with the running system directly (which is the only way to actually exercise the app today).
+> **Why port 5173 matters:** each backend service's CORS policy only allows requests from `http://localhost:5173`. The frontend's `vite.config.js` pins the dev server to that exact port (`strictPort: true`) for this reason — if Vite falls back to another port because 5173 is busy, every API call will be blocked by the browser's CORS check.
 
 ## 1. How the services fit together
 
 ```
-                         ┌─────────────────────┐
-                         │   Browser / Client   │
-                         └──────────┬───────────┘
-                                    │ HTTP
-              ┌─────────────────────┼─────────────────────┐
-              │                     │                      │
-              ▼                     ▼                      ▼
-     ┌────────────────┐   ┌────────────────────┐   ┌──────────────────┐
-     │ customer-service│   │  booking-service    │   │  review-service   │
-     │   :8080         │◄──┤  (orderservice)     │◄──┤  :8082            │
-     │                 │   │   :8081             │   │                   │
-     └────────┬────────┘   └──────────┬──────────┘   └─────────┬─────────┘
-              │                       │                         │
-              ▼                       ▼                         ▼
-        customer-db              booking-db                review-db
-        (MySQL, customerdb)    (MySQL, bookingdb)        (MySQL, review_db)
+                         ┌────────────────────────────┐
+                         │   webhotell (React + Vite)  │
+                         │   http://localhost:5173     │
+                         └──────┬──────────┬──────┬────┘
+                                │          │       │
+                   (direct browser fetch calls to each service)
+                                │          │       │
+              ┌─────────────────┘          │       └─────────────────┐
+              │                            ▼                         │
+              ▼                 ┌────────────────────┐               ▼
+     ┌────────────────┐         │  booking-service    │      ┌──────────────────┐
+     │ customer-service│◄────────┤  (orderservice)     ├─────►│  review-service   │
+     │   :8080         │         │   :8081             │      │  :8082            │
+     └────────┬────────┘         └──────────┬──────────┘      └─────────┬─────────┘
+              │                             │                            │
+              ▼                             ▼                            ▼
+        customer-db                    booking-db                  review-db
+        (MySQL, customerdb)          (MySQL, bookingdb)          (MySQL, review_db)
+```
+
+The frontend does **not** go through a gateway — it calls all three services directly from the browser, using base URLs from its own `.env` file:
+
+```
+VITE_CUSTOMER_SERVICE_URL=http://localhost:8080
+VITE_BOOKING_SERVICE_URL=http://localhost:8081
+VITE_REVIEW_SERVICE_URL=http://localhost:8082
 ```
 
 Cross-service calls (all plain REST over the Docker network):
@@ -44,7 +54,8 @@ Because of this, **booking-service needs customer-service reachable, and review-
 
 ## 2. Prerequisites
 
-- Docker and Docker Compose
+- Docker and Docker Compose (for the three backend services)
+- Node.js (for the frontend, run outside Docker — see Section 4)
 - The four repositories cloned as sibling folders:
 
 ```
@@ -52,7 +63,7 @@ hotel-app/
 ├── customerservice/
 ├── orderservice/
 ├── reviewservice/
-├── FrontEnd/
+├── webhotell/
 └── docker-compose.yml   ← the file from this README
 ```
 
@@ -61,7 +72,7 @@ mkdir hotel-app && cd hotel-app
 git clone https://github.com/Cratairx/customerservice.git
 git clone https://github.com/Cratairx/orderservice.git
 git clone https://github.com/EmilDrougge/reviewservice.git
-git clone https://github.com/Cratairx/FrontEnd.git
+git clone https://github.com/Cratairx/webhotell.git
 ```
 
 Each backend repo already ships its own `Dockerfile` (multi-stage Maven build → runnable jar), so no local Java/Maven install is required — Docker handles the build.
@@ -188,22 +199,34 @@ To stop everything: `docker compose down` (add `-v` to also wipe the database vo
 
 ## 4. Interacting with the app
 
-### 4a. Via the FrontEnd repo (static pages)
+### 4a. Via the frontend (recommended)
 
-The `FrontEnd` repo can be opened as-is, but as noted above it's a set of unrelated HTML/CSS learning exercises (`Index.html`, `CssTutorial.html`, a Bootstrap demo, etc.) — it does not call any of the three APIs, so opening it won't let you manage customers, bookings, or reviews. If you just want to view the pages:
+With the three backend services already up via `docker compose up` (Section 3), run the frontend separately with Node — it isn't part of the compose file since it's a dev-server SPA, not something you'd normally containerize for local use:
 
 ```bash
-cd FrontEnd
-npx serve .        # or: python3 -m http.server 5500
+cd webhotell
+npm install
+npm run dev
 ```
 
-then browse to whatever port it prints.
+Vite will start on `http://localhost:5173` (pinned in `vite.config.js`) — open that in your browser. The `.env` file already points it at `localhost:8080/8081/8082`, so as long as the backend stack from Section 3 is running, no configuration changes are needed.
 
-To actually build a working frontend for this app, point it at the three URLs in the table above and run it on **port 5173** (`npm create vite@latest` and `npm run dev` defaults to this) — the backend's CORS policy is already configured to allow requests from `http://localhost:5173` specifically, so a Vite dev server needs no backend changes to talk to the APIs.
+The app has three pages, reachable from the nav bar:
 
-### 4b. Directly against the APIs (works today)
+| Page | Route | What it does |
+|---|---|---|
+| **Customers** | `/customers` | List, create, edit, and delete customers (backed by customer-service) |
+| **Rooms** | `/rooms` | List, create, edit, and delete rooms (backed by booking-service) |
+| **Bookings** | `/bookings` | Check room availability for a date range, create/update/delete bookings, and — once a booking's `endDate` has passed — leave a review for that stay directly from the booking row |
 
-Until a real frontend exists, `curl`, Postman, or Insomnia are the way to exercise the system. All endpoints below assume the stack from Section 3 is running.
+A few behaviors worth knowing about while clicking around:
+- Deleting a customer who still has bookings will show an error (the backend refuses with `409 Conflict`).
+- The **Review** button on a booking only appears once its stay has ended, and only shows once per booking — the backend refuses a second review for the same booking, or a review submitted by anyone other than the customer on that booking.
+- Any network hiccup (a service not running, wrong port, etc.) surfaces as a status banner rather than a silent failure — if you see "Could not reach http://localhost:808X. Is the service running?", it means that particular backend service isn't up.
+
+### 4b. Directly against the APIs
+
+`curl`, Postman, or Insomnia work too, and are useful for testing the backend independently of the UI. All endpoints below assume the stack from Section 3 is running.
 
 **Customer Service — `http://localhost:8080/api`**
 
@@ -268,5 +291,8 @@ curl -X POST http://localhost:8082/api/reviews \
 
 ## 5. Notes / known quirks
 
-- Each repo also ships its own standalone `docker-compose.yml` / `k8s/` manifests for running that single service in isolation during development — these are useful for local iteration on one service, but the compose file in Section 3 is what's needed to run the full application together.
+- Each backend repo also ships its own standalone `docker-compose.yml` / `k8s/` manifests for running that single service in isolation during development — these are useful for local iteration on one service, but the compose file in Section 3 is what's needed to run the full application together.
 - `customerservice`'s Kubernetes/legacy compose files reference a `booking-service.base-url` property, but that value is currently unused in code — the actual cross-call to booking-service is hardcoded to `http://booking-service:8081`, which is why the container names in this compose file matter.
+- The frontend is not included in `docker-compose.yml` on purpose: it's a Vite dev server meant to run on the host so its strict `5173` port requirement (needed for CORS) is simple to guarantee. If you want it containerized too, run `npm run build` inside `webhotell` and serve the resulting `dist/` folder from any static file server or nginx container published on port `5173`.
+- Customer update is `POST /api/customer/{id}` (not `PUT`) — this trips people up when testing the API by hand, and the frontend's `customerApi.js` calls this out explicitly for the same reason.
+
