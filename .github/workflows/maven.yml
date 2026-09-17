@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  push: [main]
+
+  pull_request:
+    branches: [main]
+
+jobs:
+  test_and_build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: check out code
+        uses: actions/checkout@v4
+
+      - name: set up javen enviroment
+        uses: actions/setup-java@v4
+        with:
+          java-version: "17"
+          distribution: "temurin"
+          cache: "maven"
+
+      - name: build and run tests
+        run: mvn -B package
