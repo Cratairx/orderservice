@@ -39,7 +39,7 @@ jobs:
           cache: "maven"
 
       - name: build and run tests
-        run: mvn -B package -DskipTests
+        run: mvn -B package
 
 
 
@@ -52,6 +52,7 @@ jobs:
           docker build -t craty321/booking-service-java25:${{github.run_number}} .
 
       - name: push docker hub
+        if: github.event_name == 'push'
         run: |
           docker push craty321/booking-service-java25:${{github.run_number}}
         env:
