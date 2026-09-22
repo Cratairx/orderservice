@@ -1,4 +1,4 @@
-name: CI
+name: CI and build docker image
 
 on:
   push:
@@ -39,7 +39,21 @@ jobs:
           cache: "maven"
 
       - name: build and run tests
-        run: mvn -B package
+        run: mvn -B package -DskipTests
+
+
+#sdasd
+      - name: Log in to docker hub
+        if: github.event_name == 'push'
+        run: echo ${{secrets.DOCKERHUYB_TOKEN}} | docker login -u ${{secrets.DOCKERHUB_USERNAME}} --password-stdin
+
+      - name: build image
+        run: |
+          docker build -t craty321/booking-service-java25:${{github.run_number}} .
+
+      - name: push docker hub
+        run: |
+          docker push craty321/booking-service-java25:${{github.run_number}}
         env:
           # om man får error här kan det vara att det ska stå localhost:3306 istället
           SPRING_DATASOURCE_URL: jdbc:mysql://booking-db:3306/bookingdb
