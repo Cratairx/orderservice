@@ -9,10 +9,10 @@
         <relativePath/>
     </parent>
     <groupId>org.example</groupId>
-    <artifactId>CustomerService</artifactId>
+    <artifactId>booking-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>CustomerService</name>
-    <description>CustomerService</description>
+    <name>booking-service</name>
+    <description>booking-service</description>
     <url/>
     <licenses>
         <license/>
