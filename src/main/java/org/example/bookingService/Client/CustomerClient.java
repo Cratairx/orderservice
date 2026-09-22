@@ -14,7 +14,7 @@ public class CustomerClient {
     public CustomerClient(@Value("${customer-service.base-url}") String baseUrl) {
         this.restClient = RestClient.create(baseUrl);
     }
-// test
+// testar på min bärbara att allt fungerar här också
     public boolean customerExists(Long customerId) {
         try {
             restClient.get().uri("/api/customer/{id}", customerId).retrieve().toBodilessEntity();
