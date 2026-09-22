@@ -56,6 +56,6 @@ jobs:
           docker push craty321/booking-service-java25:${{github.run_number}}
         env:
           # om man får error här kan det vara att det ska stå localhost:3306 istället
-          SPRING_DATASOURCE_URL: ${{DATABASE_URL}}
-          SPRING_DATASOURCE_USERNAME: ${{DATABASE_USERNAME}}
-          SPRING_DATASOURCE_PASSWORD: ${{DATABASE_PASSWORD}}
+          SPRING_DATASOURCE_URL: ${{secrets.DATABASE_URL}}
+          SPRING_DATASOURCE_USERNAME: ${{secrets.DATABASE_USERNAME}}
+          SPRING_DATASOURCE_PASSWORD: ${{secrets.DATABASE_PASSWORD}}
